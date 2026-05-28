@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_OR_BOLI_IC():
+    page = "https://www.oregon.gov/boli/employers/Pages/pwr-ineligible-contractors.aspx"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'List of Ineligibles')]/following::tbody").text
+    print(Content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_OR_BOLI_IC()

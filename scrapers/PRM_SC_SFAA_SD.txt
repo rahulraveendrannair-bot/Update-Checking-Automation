@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_SC_SFAA_SD():
+    page = "https://procurement.sc.gov/legal/legal-suspend-debar"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//h3[contains(text(),'Suspensions & Debarments')]//ancestor::div[1]").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_SC_SFAA_SD()

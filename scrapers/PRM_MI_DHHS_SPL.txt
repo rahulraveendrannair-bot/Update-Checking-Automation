@@ -1,0 +1,31 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_MI_DHHS_SPL():
+    page = "https://www.michigan.gov/en/mdhhs/doing-business/providers/providers/billingreimbursement/list-of-sanctioned-providers"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, '//*[@id="ftn1"]/p[3]/strong[1]/strong/strong/strong/a').get_attribute("href")
+    print(link)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
+                      "(KHTML, like Gecko) Chrome/123.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,"
+                  "image/avif,image/webp,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+        "Referer": page,  # IMPORTANT on some sites
+        "Connection": "keep-alive",
+    }
+    response = requests.get(link, headers=headers, timeout=60, allow_redirects=True)
+    response.raise_for_status()
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_MI_DHHS_SPL()

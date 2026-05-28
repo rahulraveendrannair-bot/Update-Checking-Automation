@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_TX_TC_DVL():
+    page = "https://comptroller.texas.gov/purchasing/programs/vendor-performance-tracking/debarred-vendors.php"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//h1[contains(text(),'Debarred Vendor List')]//following::table").text
+    print(Content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_TX_TC_DVL()

@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def TT_FIU_HAITI():
+    page = "https://agla.gov.tt/uncategorized/united-nations-security-council-resolution-unscr-26532022-haiti/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '//*[@id="panel-26470-0-0-0"]/div/div/div').text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+TT_FIU_HAITI()

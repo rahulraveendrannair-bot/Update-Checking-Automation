@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_NV_OLC_DC():
+    page = "https://labor.nv.gov/PrevailingWage/Disqualified_Contractors/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'List of Disqualified Contractors')]//following::tbody[1]").text
+    print(Content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_NV_OLC_DC()

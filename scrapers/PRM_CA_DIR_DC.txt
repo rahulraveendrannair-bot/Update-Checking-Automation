@@ -1,0 +1,11 @@
+import hashlib
+import requests
+from bs4 import BeautifulSoup
+def PRM_CA_DIR_DC():
+    website = 'https://www.dir.ca.gov/dlse/debar.html'
+    r = requests.get(website).text
+    soup = BeautifulSoup(r, "html.parser")
+    Content = soup.find("table", class_="table")
+    output_date = hashlib.sha256(str(Content).encode('utf-8')).hexdigest()
+    print(output_date)
+PRM_CA_DIR_DC()

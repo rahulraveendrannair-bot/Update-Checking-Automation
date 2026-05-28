@@ -1,0 +1,39 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_NH_DHHS_MPESL():
+    page = "https://www.dhhs.nh.gov/programs-services/medicaid/medicaid-provider-relations"
+    options = Options()
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    link = driver.find_element(
+        By.XPATH,
+        "//*[contains(text(),'Medicaid Provider Exclusion and Sanction List')]"
+    ).get_attribute("href")
+    print("Download URL:", link)
+    driver.quit()
+    session = requests.Session()
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)",
+        "Accept": "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/vnd.ms-excel",
+        "Referer": page,
+        "Accept-Language": "en-US,en;q=0.9",
+        "Connection": "keep-alive"
+    }
+    session.get(page, headers=headers)
+    response = session.get(link, headers=headers)
+    response.raise_for_status()
+    if "text/html" in response.headers.get("Content-Type", ""):
+        raise Exception("Blocked – got HTML instead of Excel")
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(
+        df.to_string(index=False).encode("utf-8")
+    ).hexdigest()
+    print(output_date)
+PRM_NH_DHHS_MPESL()

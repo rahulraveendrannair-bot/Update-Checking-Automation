@@ -1,0 +1,36 @@
+import hashlib
+from playwright.sync_api import sync_playwright
+def scrape_table_to_text(page) -> str:
+    rows = page.locator("table tr")
+    row_count = rows.count()
+    lines = []
+    for i in range(row_count):
+        cells = rows.nth(i).locator("th, td")
+        cell_count = cells.count()
+        row_text = "\t".join(
+            cells.nth(j).inner_text().strip() for j in range(cell_count)
+        )
+        if row_text.strip():
+            lines.append(row_text)
+    return "\n".join(lines)
+def PRM_FL_DMS_CVL():
+    base_url = "https://www.dms.myflorida.com/business_operations/state_purchasing/state_agency_resources/vendor_registration_and_vendor_lists"
+    convicted_url = f"{base_url}/convicted_vendor_list"
+    suspended_url = f"{base_url}/suspended_vendor_list"
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(convicted_url)
+        page.wait_for_load_state("networkidle")
+        convicted_text = scrape_table_to_text(page)
+        page.close()
+        page = browser.new_page()
+        page.goto(suspended_url)
+        page.wait_for_load_state("networkidle")
+        suspended_text = scrape_table_to_text(page)
+        page.close()
+        browser.close()
+    combined_text = convicted_text + suspended_text
+    output_hash = hashlib.sha256(combined_text.encode("utf-8")).hexdigest()
+    print(output_hash)
+PRM_FL_DMS_CVL()

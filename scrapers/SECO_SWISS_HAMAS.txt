@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def SECO_SWISS_HAMAS():
+    page = "https://www.seco.admin.ch/seco/de/home/Aussenwirtschaftspolitik_Wirtschaftliche_Zusammenarbeit/Wirtschaftsbeziehungen/exportkontrollen-und-sanktionen/sanktionen-embargos/sanktionsmassnahmen/massnahmen-gegenueber-hamas.html"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Date = driver.find_element(By.XPATH, "//*[contains(text(),'Änderung PDF')]//following::td[2]").text
+    print(Date)
+    driver.quit()
+    output_date = hashlib.sha256(Date.encode("utf-8")).hexdigest()
+    print(output_date)
+SECO_SWISS_HAMAS()

@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def US_EPA_FUGITIVES():
+    page = "https://www.epa.gov/enforcement/epa-fugitives"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Page2 = driver.find_element(By.XPATH, '//*[@id="main"]/div').text
+    print(Page2)
+    output_date = hashlib.sha256(Page2.encode("utf-8")).hexdigest()
+    print(output_date)
+US_EPA_FUGITIVES()

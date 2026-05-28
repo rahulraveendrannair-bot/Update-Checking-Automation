@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_NC_DA_DV():
+    page = "https://www.doa.nc.gov/divisions/purchase-contract/debarred-vendors"
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, "//*[contains(text(),'Files last revised:')]").text
+    print(link)
+    output_date = hashlib.sha256(link.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_NC_DA_DV()

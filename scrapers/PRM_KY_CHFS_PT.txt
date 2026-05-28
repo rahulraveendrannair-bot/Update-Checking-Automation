@@ -1,0 +1,34 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_KY_CHFS_PT():
+    page = "https://www.chfs.ky.gov/agencies/dms/dpi/pe/Pages/terminated.aspx"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, "//*[contains(text(),'Alphabetical Provider Termination List (Excel)')]")
+    url = link.get_attribute("href")
+    cookies = driver.get_cookies()
+    ua = driver.execute_script("return navigator.userAgent;")
+    driver.quit()
+    print("Excel URL:", url)
+    s = requests.Session()
+    s.headers.update({
+        "User-Agent": ua,
+        "Referer": page
+    })
+    for c in cookies:
+        s.cookies.set(c["name"], c["value"])
+    r = s.get(url, timeout=60)
+    r.raise_for_status()
+    excel_bytes = r.content
+    df = pd.read_excel(io.BytesIO(excel_bytes), engine="openpyxl")
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_KY_CHFS_PT()

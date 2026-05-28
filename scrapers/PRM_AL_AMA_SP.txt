@@ -1,0 +1,13 @@
+import hashlib
+import requests
+from bs4 import BeautifulSoup
+def PRM_AL_AMA_SP():
+    url1="https://medicaid.alabama.gov/content/8.0_Fraud/8.7_Suspended_Providers.aspx"
+    response = requests.get(url1)
+    response.raise_for_status()
+    soup = BeautifulSoup(response.content, "html.parser")
+    Page = soup.find("div", {"class": "col-lg-8"})
+    Page2 = Page.find("ul").text
+    output_date = hashlib.sha256(Page2.encode('utf-8')).hexdigest()
+    print(output_date)
+PRM_AL_AMA_SP()

@@ -1,0 +1,24 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def TR_MTF_ARTICLE_3():
+    page = "https://en.hmb.gov.tr/3a3b"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link2 = driver.find_element(By.XPATH, "//*[contains(text(),'Excel')]").get_attribute("href")
+    print(Link2)
+    driver.close()
+    response = requests.get(Link2)
+    response.raise_for_status()
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+TR_MTF_ARTICLE_3()

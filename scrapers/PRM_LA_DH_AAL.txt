@@ -1,0 +1,23 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_LA_DH_AAL():
+    page = "https://adverseactions.ldh.la.gov/SelSearch/SelSearch/Export"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, "//*[contains(text(),'Download CSV')]")
+    url = link.get_attribute("href")
+    r = requests.get(url)
+    r.raise_for_status()
+    df = pd.read_csv(io.BytesIO(r.content), skiprows=1)
+    Data = df.to_csv(index=False)
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+PRM_LA_DH_AAL()

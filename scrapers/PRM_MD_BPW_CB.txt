@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_MD_BPW_CB():
+    page = "https://bpw.maryland.gov/Pages/Debarments.aspx"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, '//*[@id="ctl00_PlaceHolderMain_RichHtmlField1__ControlWrapper_RichHtmlField"]/table[1]').text
+    print(link)
+    output_date = hashlib.sha256(link.encode('utf-8')).hexdigest()
+    print(output_date)
+PRM_MD_BPW_CB()

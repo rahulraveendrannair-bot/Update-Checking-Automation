@@ -1,0 +1,29 @@
+import hashlib
+import time
+import requests
+import io
+from io import BytesIO
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def PRM_IN_FSSA_PT():
+    website = 'https://www.in.gov/fssa/ompp/provider-information4/termination-of-provider-participation-in-medicaid-and-chip/'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'Terminated providers')]").get_attribute("href")
+    print(Content)
+    driver.quit()
+    response = requests.get(Content)
+    response.raise_for_status()
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_IN_FSSA_PT()

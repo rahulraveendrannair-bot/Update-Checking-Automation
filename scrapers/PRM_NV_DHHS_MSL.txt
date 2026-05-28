@@ -1,0 +1,30 @@
+import time, hashlib
+import requests
+from io import BytesIO
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_NV_DHHS_MSL():
+    page = "https://www.nevadamedicaid.nv.gov/providers/provider-exclusions-sanctions-and-press-releases/"
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'NV Exclusion List')]").get_attribute("href")
+    print(Link)
+    response = requests.get(Link)
+    soup = BeautifulSoup(response.content, "html.parser")
+    response.raise_for_status()
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        full_text += text.strip()
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_NV_DHHS_MSL()

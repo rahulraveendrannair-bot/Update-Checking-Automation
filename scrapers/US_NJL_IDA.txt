@@ -1,0 +1,19 @@
+import hashlib
+import requests
+from pypdf import PdfReader
+from io import BytesIO
+def US_NJL_IDA():
+    url1="https://www.nj.gov/treasury/doinvest/pdf/index/Iran_Progress_Report.pdf"
+    response = requests.get(url1)
+    response.raise_for_status()
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        full_text += text.strip()
+        print(full_text)
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+US_NJL_IDA()

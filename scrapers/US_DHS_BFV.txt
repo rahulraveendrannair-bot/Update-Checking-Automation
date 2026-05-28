@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def US_DHS_BFV():
+    page = "https://www.dco.uscg.mil/Our-Organization/Assistant-Commandant-for-Prevention-Policy-CG-5P/Inspections-Compliance-CG-5PC-/Commercial-Vessel-Compliance/Foreign-Offshore-Compliance-Division/Port-State-Control/BannedVessels/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Page2 = driver.find_element(By.XPATH, "//*[contains(text(),'Vessels Banned From')]//ancestor::table").text
+    print(Page2)
+    output_date = hashlib.sha256(Page2.encode("utf-8")).hexdigest()
+    print(output_date)
+US_DHS_BFV()

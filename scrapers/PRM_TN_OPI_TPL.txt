@@ -1,0 +1,18 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_TN_OPI_TPL():
+    page = "https://www.tn.gov/tenncare/fraud-and-abuse/program-integrity.html"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Search = driver.find_element(By.XPATH, "//*[contains(text(),'Terminated Provider List')]").click()
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'Terminated Provider List')]//following::table").text
+    print(Content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_TN_OPI_TPL()

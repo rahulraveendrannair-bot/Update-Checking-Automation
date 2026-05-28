@@ -1,0 +1,20 @@
+import time, hashlib
+import requests
+from io import BytesIO
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def SG_SGX_WATCH_LIST():
+    page = "https://regco.sgx.com/directors-and-executive-officers-watchlist"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Link = driver.find_element(By.XPATH, "//h1[contains(text(),'Watchlist')]//following::table").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+SG_SGX_WATCH_LIST()

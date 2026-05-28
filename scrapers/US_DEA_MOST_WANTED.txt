@@ -1,0 +1,66 @@
+import time, hashlib, re
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+def US_DEA_MOST_WANTED():
+    BASE_URL = "https://www.dea.gov/fugitives/all"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(BASE_URL)
+    time.sleep(5)
+    all_rows = []
+    soup = BeautifulSoup(driver.page_source, "html.parser")
+    last_page_tag = soup.find("a", title=lambda t: t and "last page" in t.lower())
+    if last_page_tag:
+        match = re.search(r"page=(\d+)", last_page_tag["href"])
+        last_page = int(match.group(1)) if match else 0
+    else:
+        last_page = 0
+    total_pages = last_page + 1  # pages are 0-indexed (?page=0 ... ?page=54)
+    print(f"Total pages: {total_pages}")
+    for page_num in range(total_pages):
+        url = BASE_URL if page_num == 0 else f"{BASE_URL}?page={page_num}"
+        if page_num > 0:
+            driver.get(url)
+            time.sleep(2)
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CSS_SELECTOR, "h3 a[href*='/fugitives/']"))
+        )
+        page_soup = BeautifulSoup(driver.page_source, "html.parser")
+        fugitive_links = page_soup.select("h3 a[href*='/fugitives/']")
+        page_rows = 0
+        for tag in fugitive_links:
+            name = tag.get_text(strip=True)
+            href = tag["href"]
+            profile_url = "https://www.dea.gov" + href if href.startswith("/") else href
+            parent = tag.find_parent(["article", "div", "li", "section"])
+            charges = ""
+            if parent:
+                p_tag = parent.find("p")
+                if p_tag:
+                    charges = p_tag.get_text(separator=" ", strip=True)
+            img_tag = parent.find("img") if parent else None
+            photo_url = ""
+            if img_tag and img_tag.get("src"):
+                src = img_tag["src"]
+                photo_url = "https://www.dea.gov" + src if src.startswith("/") else src
+            all_rows.append({
+                "name":        name,
+                "charges":     charges,
+                "profile_url": profile_url,
+                "photo_url":   photo_url,
+            })
+            page_rows += 1
+        print(f"Page {page_num + 1}/{total_pages}: {page_rows} fugitives (total: {len(all_rows)})")
+    driver.quit()
+    df = pd.DataFrame(all_rows)
+    print(f"\nTotal fugitives collected: {len(df)}")
+    print(df.to_string(index=False))
+    output_hash = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_hash)
+US_DEA_MOST_WANTED()

@@ -1,0 +1,18 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_PA_DGS_DSL():
+    page = "https://www.dgs.internet.state.pa.us/debarmentsearch/debarment/index"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Search = driver.find_element(By.XPATH, '//*[@id="btnOpenSearch"]').click()
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//div[table]").text
+    print(Content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_PA_DGS_DSL()

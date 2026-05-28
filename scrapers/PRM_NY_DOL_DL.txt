@@ -1,0 +1,38 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def PRM_NY_DOL_DL():
+    page = "https://apps.labor.ny.gov/EDList/searchResults.do"
+    options = Options()
+    # options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    wait = WebDriverWait(driver, 15)
+    driver.get(page)
+    time.sleep(3)
+    dol = driver.find_element(By.CSS_SELECTOR, "input[name='searchRadioBox'][value='dolSearch']")
+    driver.execute_script("arguments[0].click();", dol)
+    time.sleep(1)
+    btn = driver.find_element(By.CSS_SELECTOR, "input[type='submit'][value='Search']")
+    driver.execute_script("arguments[0].click();", btn)
+    time.sleep(3)
+    full_content = []
+    while True:
+        wait.until(EC.presence_of_element_located((By.ID, "ResultsTable")))
+        table = driver.find_element(By.ID, "ResultsTable")
+        Content = table.text.strip()
+        full_content.append(Content)
+        try:
+            next_btn = driver.find_element(By.LINK_TEXT, "Next")
+            driver.execute_script("arguments[0].click();", next_btn)
+            time.sleep(2)
+        except Exception:
+            print("[+] No more pages.")
+            break
+    driver.quit()
+    Content = "\n".join(full_content)
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_NY_DOL_DL()

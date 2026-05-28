@@ -1,0 +1,27 @@
+import hashlib
+import requests
+from io import BytesIO
+from pypdf import PdfReader
+from playwright.sync_api import sync_playwright
+def PRM_DC_DDS_PSL():
+    website = 'https://dds.dc.gov/publication/provider-sanctions-list'
+    with sync_playwright() as p:
+        browser = p.chromium.launch(headless=True)
+        page = browser.new_page()
+        page.goto(website)
+        page.wait_for_load_state("networkidle")
+        link = page.locator("text=Provider Sanctions List-UPDATED").first
+        content_url = link.get_attribute("href")
+        print(content_url)
+        browser.close()
+    response = requests.get(content_url)
+    response.raise_for_status()
+    pdf_file = BytesIO(response.content)
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        full_text += text.strip()
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_DC_DDS_PSL()

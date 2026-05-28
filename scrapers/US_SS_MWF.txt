@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def US_SS_MWF():
+    page = "https://www.secretservice.gov/investigations/mostwanted"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Date = driver.find_element(By.XPATH, "//h1[contains(text(),'Most Wanted Fugitives')]//following::div[2]").text
+    print(Date)
+    driver.close()
+    output_date = hashlib.sha256(Date.encode("utf-8")).hexdigest()
+    print(output_date)
+US_SS_MWF()

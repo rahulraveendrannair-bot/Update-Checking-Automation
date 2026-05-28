@@ -1,0 +1,23 @@
+import hashlib
+import time
+import requests
+from io import BytesIO
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def PRM_HI_DHS_PERL():
+    website = 'https://medquest.hawaii.gov/en/plans-providers/provider-exclusion-reinstatement-list.html'
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'List of Excluded Providers- Updated')]").text
+    print(Content)
+    driver.quit()
+    output_hash = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_hash)
+PRM_HI_DHS_PERL()

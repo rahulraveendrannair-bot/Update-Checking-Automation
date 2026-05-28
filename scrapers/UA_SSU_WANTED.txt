@@ -1,0 +1,17 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def UA_SSU_WANTED():
+    page = "https://ssu.gov.ua/en/u-rozshuku"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//h2[contains(text(),'Wanted')]//following::ul[2]").text
+    print(Link)
+    driver.close()
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+UA_SSU_WANTED()

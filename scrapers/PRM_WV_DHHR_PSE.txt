@@ -1,0 +1,60 @@
+import time, hashlib, re
+import requests
+from io import BytesIO
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+import urllib3
+def PRM_WV_DHHR_PSE():
+    page = "https://www.wvmmis.com/SitePages/Medicaid%20Provider%20SanctionedExclusion"
+    base_url = "https://www.wvmmis.com"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    try:
+        driver.get(page)
+        time.sleep(8)
+        html = driver.page_source
+        soup = BeautifulSoup(html, "html.parser")
+        pdf_filename = None
+        library_name = None
+        for a in soup.find_all("a", href=True):
+            href = a["href"]
+            text = a.get_text(strip=True)
+            if "doPostBack" in href and text.lower().endswith(".pdf"):
+                pdf_filename = text
+                tr = a.find_parent("tr")
+                if tr:
+                    hidden_tds = tr.find_all("td", style=re.compile(r"display\s*:\s*none", re.I))
+                    if hidden_tds:
+                        library_name = hidden_tds[0].get_text(strip=True)
+                break
+        if not pdf_filename:
+            raise ValueError("Could not locate PDF link on the page.")
+        if not library_name:
+            library_name = "Medicaid+Provider+SanctionedExclusion"
+        file_encoded = requests.utils.quote(pdf_filename)
+        pdf_url = f"{base_url}/SharepointDownload?parent={library_name}&docname={file_encoded}"
+        print("PDF URL:", pdf_url)
+    finally:
+        driver.quit()
+    urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36"
+    }
+    response = requests.get(pdf_url, headers=headers, timeout=60, verify=False)
+    response.raise_for_status()
+    if not response.content.startswith(b"%PDF"):
+        preview = response.content[:300].decode("utf-8", errors="replace")
+        raise ValueError("Downloaded content is not a PDF. Preview:\n" + preview)
+    reader = PdfReader(BytesIO(response.content))
+    full_text = ""
+    for p in reader.pages:
+        text = p.extract_text() or ""
+        full_text += text.strip() + "\n"
+    print(full_text)
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_WV_DHHR_PSE()

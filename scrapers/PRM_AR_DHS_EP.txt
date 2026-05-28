@@ -1,0 +1,47 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+PAGE_URL = "https://dhs.arkansas.gov/dhs/portal/Exclusions/PublicSearch/"
+LINK_XPATH = '//*[@id="s4-bodyContainer"]/div[6]/form/div[6]/div/a'
+def PRM_AR_DHS_EP():
+    options = Options()
+    # options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    try:
+        driver.get(PAGE_URL)
+        link_element = WebDriverWait(driver, 20).until(
+            EC.presence_of_element_located((By.XPATH, LINK_XPATH))
+        )
+        download_url = link_element.get_attribute("href")
+        print(f"Download URL: {download_url}")
+    finally:
+        driver.quit()
+    response = requests.get(download_url, timeout=30)
+    response.raise_for_status()
+    raw_text = response.content.decode("utf-8", errors="replace")
+    lines = raw_text.splitlines()
+    print("=== RAW PREVIEW ===")
+    for i, line in enumerate(lines[:3]):
+        print(f"Line {i}: {line}")
+    print(f"Total lines: {len(lines)}")
+    print("===================")
+    df = pd.read_csv(
+        io.StringIO(raw_text),
+        skiprows=1,
+        on_bad_lines='warn',   # 'skip' to silently drop, 'warn' to log them
+        engine='python'
+    )
+    print(f"Loaded {len(df)} rows, {len(df.columns)} columns")
+    print(f"Columns: {df.columns.tolist()}")
+    print(df.head())
+    csv_data = df.to_csv(index=False)
+    output_date = hashlib.sha256(csv_data.encode("utf-8")).hexdigest()
+    print(output_date)
+    return df, output_date
+if __name__ == "__main__":
+    dataframe, output_date = PRM_AR_DHS_EP()

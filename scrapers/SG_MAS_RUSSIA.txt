@@ -1,0 +1,21 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def SG_MAS_RUSSIA():
+    page = "https://www.mas.gov.sg/regulation/anti-money-laundering/targeted-financial-sanctions"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Date = driver.find_element(By.XPATH, "//*[contains(text(),'Financial measures in relation to Russia')]").click()
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, "//*[contains(text(),'Amendment Notes')]//following::p[1]").text
+    print(Data)
+    driver.quit()
+    output_date = hashlib.sha256(Data.encode("utf-8")).hexdigest()
+    print(output_date)
+SG_MAS_RUSSIA()

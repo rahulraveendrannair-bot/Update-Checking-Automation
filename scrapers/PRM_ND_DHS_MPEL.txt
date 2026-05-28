@@ -1,0 +1,24 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_ND_DHS_MPEL():
+    page = "https://www.hhs.nd.gov/healthcare/medicaid/provider/compliance/fraud-and-abuse"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    link = driver.find_element(By.XPATH, "//*[contains(text(),'ND Medicaid Provider Exclusion List (xls)')]").get_attribute("href")
+    print(link)
+    driver.quit()
+    response = requests.get(link)
+    response.raise_for_status()
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_ND_DHS_MPEL()

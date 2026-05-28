@@ -1,0 +1,30 @@
+import io, hashlib
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
+def PRM_TX_HHS_EP():
+    page = "https://oig.hhsc.state.tx.us/oigportal2/Exclusions/ctl/DOW/mid/384"
+    EVENT_TARGET = "dnn$ctr384$DownloadExclusionsFile$lb_DLoad_ExcFile_XLS"
+    s = requests.Session()
+    s.headers.update({"User-Agent": "Mozilla/5.0"})
+    r = s.get(page, timeout=60)
+    r.raise_for_status()
+    soup = BeautifulSoup(r.text, "html.parser")
+    payload = {}
+    for inp in soup.select("input[type=hidden]"):
+        name = inp.get("name")
+        if name:
+            payload[name] = inp.get("value", "")
+    payload["__EVENTTARGET"] = EVENT_TARGET
+    payload["__EVENTARGUMENT"] = ""
+    d = s.post(page, data=payload, timeout=120)
+    d.raise_for_status()
+    ct = (d.headers.get("Content-Type") or "").lower()
+    if "text/html" in ct:
+        raise RuntimeError("Got HTML back (postback failed). Inspect response text:\n" + d.text[:500])
+    excel_bytes = d.content
+    df = pd.read_excel(io.BytesIO(excel_bytes), engine="xlrd")  # pip install xlrd
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_TX_HHS_EP()

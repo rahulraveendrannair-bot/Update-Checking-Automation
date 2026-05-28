@@ -1,0 +1,42 @@
+import io
+import hashlib
+import requests
+import pandas as pd
+def ZA_FIC_TFS() -> str:
+    base_url  = "https://tfs.fic.gov.za"
+    page_url  = f"{base_url}/Pages/TFSListDownload"
+    post_url  = f"{base_url}/Pages/TFSListDownload?fileType=excel"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 Chrome/124.0 Safari/537.36",
+        "Referer":    page_url,
+        "Origin":     base_url,
+    }
+    session = requests.Session()
+    session.get(page_url, headers=headers, timeout=30)
+    response = session.post(
+        post_url,
+        headers={**headers, "Content-Type": "application/x-www-form-urlencoded"},
+        data={},
+        timeout=60,
+        allow_redirects=True,
+    )
+    response.raise_for_status()
+    content_type = response.headers.get("Content-Type", "")
+    print(f"[+] Response Content-Type : {content_type}")
+    print(f"[+] Response size         : {len(response.content):,} bytes")
+    if "html" in content_type.lower():
+        raise RuntimeError(
+            "Server returned HTML instead of an Excel file. "
+            "The POST may need additional form fields or cookies. "
+            "Check the DevTools Network tab for the exact request payload."
+        )
+    df = pd.read_excel(io.BytesIO(response.content))
+    print(f"[+] DataFrame shape       : {df.shape}")
+    print(df.to_string(index=False))
+    df_string   = df.to_string(index=False)
+    sha256_hash = hashlib.sha256(df_string.encode("utf-8")).hexdigest()
+    print(sha256_hash)
+    return sha256_hash
+if __name__ == "__main__":
+    ZA_FIC_TFS()

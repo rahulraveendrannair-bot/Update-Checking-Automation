@@ -1,0 +1,71 @@
+import time, hashlib, re
+import requests
+import pandas as pd
+from bs4 import BeautifulSoup
+def US_DOT_MOST_WANTED():
+    BASE_URL = "https://www.oig.dot.gov/wanted-fugitives"
+    HEADERS = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+                      "AppleWebKit/537.36 (KHTML, like Gecko) "
+                      "Chrome/124.0.0.0 Safari/537.36",
+        "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+        "Accept-Language": "en-US,en;q=0.9",
+    }
+    session = requests.Session()
+    all_rows = []
+    def parse_page(soup):
+        rows = []
+        for li in soup.select("ul.item-list li, .view-content li, article li, li"):
+            links = li.find_all("a", href=re.compile(r"^/wanted-fugitives/[^?#]+$"))
+            for a in links:
+                # Skip the photo link (it wraps an <img>)
+                if a.find("img"):
+                    continue
+                name = a.get_text(strip=True)
+                if name:
+                    rows.append(name)
+        return rows
+    resp = session.get(BASE_URL, headers=HEADERS, timeout=30)
+    resp.raise_for_status()
+    soup = BeautifulSoup(resp.text, "html.parser")
+    last_link = soup.find("a", string=re.compile(r"last", re.I))
+    if last_link and "page=" in last_link.get("href", ""):
+        last_page = int(re.search(r"page=(\d+)", last_link["href"]).group(1))
+    else:
+        page_nums = [
+            int(m.group(1))
+            for a in soup.select("nav.pager a, ul.pager a, .pagination a, a[href*='page=']")
+            for m in [re.search(r"page=(\d+)", a.get("href", ""))]
+            if m
+        ]
+        last_page = max(page_nums) if page_nums else 0
+
+    total_pages = last_page + 1
+    print(f"Total pages detected: {total_pages}")
+    for page_num in range(total_pages):
+        if page_num == 0:
+            page_soup = soup
+        else:
+            time.sleep(1)
+            url = f"{BASE_URL}?page={page_num}"
+            r = session.get(url, headers=HEADERS, timeout=30)
+            r.raise_for_status()
+            page_soup = BeautifulSoup(r.text, "html.parser")
+        names = parse_page(page_soup)
+        seen = set()
+        unique_names = []
+        for n in names:
+            if n not in seen:
+                seen.add(n)
+                unique_names.append(n)
+        for name in unique_names:
+            name_hash = hashlib.sha256(name.encode("utf-8")).hexdigest()
+            all_rows.append({"name": name, "name_hash": name_hash})
+        print(f"Page {page_num + 1}/{total_pages}: {len(unique_names)} fugitives "
+              f"(total: {len(all_rows)})")
+    df = pd.DataFrame(all_rows).drop_duplicates(subset="name").reset_index(drop=True)
+    print(f"\nTotal unique fugitives: {len(df)}")
+    print(df.to_string(index=False))
+    output_hash = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_hash)
+US_DOT_MOST_WANTED()

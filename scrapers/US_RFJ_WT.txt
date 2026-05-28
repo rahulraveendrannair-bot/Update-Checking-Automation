@@ -1,0 +1,135 @@
+import time
+import io
+import hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def scroll_page(driver):
+    for scroll_y in range(0, 8000, 400):
+        driver.execute_script(f"window.scrollTo(0, {scroll_y});")
+        time.sleep(0.2)
+    driver.execute_script("window.scrollTo(0, 0);")
+    time.sleep(2)
+def extract_cards(driver):
+    records = []
+    cards = driver.find_elements(By.CLASS_NAME, "jet-listing-grid__item")
+    print(f"  [INFO] Found {len(cards)} cards on this page.")
+    for card in cards:
+        try:
+            h2_els = card.find_elements(By.CSS_SELECTOR, "h2.elementor-heading-title")
+            category = h2_els[0].text.strip() if len(h2_els) > 0 else ""
+            name     = h2_els[1].text.strip() if len(h2_els) > 1 else ""
+            try:
+                region = card.find_element(
+                    By.CSS_SELECTOR, "span.jet-listing-dynamic-terms__link"
+                ).text.strip()
+            except Exception:
+                region = ""
+            try:
+                reward = card.find_element(
+                    By.CSS_SELECTOR, "p.elementor-heading-title"
+                ).text.strip()
+            except Exception:
+                reward = ""
+            try:
+                url = card.find_element(
+                    By.CSS_SELECTOR, "a.jet-engine-listing-overlay-link"
+                ).get_attribute("href")
+            except Exception:
+                url = ""
+            if name:
+                records.append({
+                    "name":     name,
+                    "category": category,
+                    "region":   region,
+                    "reward":   reward,
+                    "url":      url,
+                })
+        except Exception as e:
+            print(f"  [WARN] Card parse error: {e}")
+    return records
+def get_next_button(driver):
+    try:
+        next_btn = driver.find_element(
+            By.XPATH,
+            "//*[contains(@class,'jet-filters-pagination__item') and "
+            "(normalize-space(.)='Next' or normalize-space(.)='»')] | "
+            "//a[contains(@class,'jet-filters-pagination__item') and "
+            "(normalize-space(.)='Next' or normalize-space(.)='»')]"
+        )
+        if next_btn.is_displayed() and next_btn.is_enabled():
+            return next_btn
+    except Exception:
+        pass
+    try:
+        next_btn = driver.find_element(
+            By.XPATH,
+            "//*[contains(translate(@class,'NEXT','next'),'next') and "
+            "not(contains(@class,'prev'))]//a | "
+            "//a[contains(translate(@class,'NEXT','next'),'next') and "
+            "not(contains(@class,'prev'))]"
+        )
+        if next_btn.is_displayed() and next_btn.is_enabled():
+            return next_btn
+    except Exception:
+        pass
+    return None
+def US_RFJ_WT():
+    page = "https://rewardsforjustice.net/index/"
+    options = Options()
+    # options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    print("  [INFO] Waiting for page to fully load ...")
+    time.sleep(8)
+    scroll_page(driver)
+    all_records = []
+    current_page = 1
+    while True:
+        print(f"\n{'='*60}")
+        print(f"  Processing page {current_page} ...")
+        print(f"{'='*60}")
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.CLASS_NAME, "jet-listing-grid__items"))
+        )
+        time.sleep(2)
+        scroll_page(driver)
+        page_records = extract_cards(driver)
+        all_records.extend(page_records)
+        print(f"\n  Extracted {len(page_records)} records from page {current_page}:")
+        for r in page_records:
+            print(f"    • {r['name']}")
+            print(f"      Category : {r['category']}")
+            print(f"      Region   : {r['region']}")
+            print(f"      Reward   : {r['reward']}")
+            print(f"      URL      : {r['url']}")
+        next_btn = get_next_button(driver)
+        if next_btn:
+            print(f"\n  [INFO] Clicking Next → page {current_page + 1} ...")
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", next_btn)
+            time.sleep(1)
+            driver.execute_script("arguments[0].click();", next_btn)
+            current_page += 1
+            time.sleep(5)  # Wait for next page to load
+        else:
+            print(f"\n  [INFO] No Next button found. Reached last page ({current_page}).")
+            break
+    driver.close()
+    print(f"\n{'='*60}")
+    print(f"  TOTAL INDIVIDUALS EXTRACTED: {len(all_records)} across {current_page} pages")
+    print(f"{'='*60}\n")
+    lines = []
+    for i, r in enumerate(all_records, 1):
+        lines.append(f"{i}. {r['name']}")
+        lines.append(f"   Category : {r['category']}")
+        lines.append(f"   Region   : {r['region']}")
+        lines.append(f"   Reward   : {r['reward']}")
+        lines.append(f"   URL      : {r['url']}")
+        lines.append("")
+    output_text = "\n".join(lines)
+    print(output_text)
+    output_hash = hashlib.sha256(output_text.encode("utf-8")).hexdigest()
+    print(output_hash)
+US_RFJ_WT()

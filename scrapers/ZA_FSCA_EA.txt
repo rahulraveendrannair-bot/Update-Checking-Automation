@@ -1,0 +1,18 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def ZA_FSCA_EA():
+    page = "https://www.fsca.co.za/Enforcement-Actions/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(10)
+    iframe = driver.find_element(By.XPATH, '//*[@id="myFrame"]')
+    driver.switch_to.frame(iframe)
+    Data = driver.find_element(By.XPATH, "//strong[contains(text(),'Enforcement Actions Search')]//following::table").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+ZA_FSCA_EA()

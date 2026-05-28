@@ -1,0 +1,46 @@
+import re
+import hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def TH_AMLO_SANCTIONS():
+    start_url = "https://www.amlo.go.th/index.php/en/#"
+    options = Options()
+    #options.add_argument("--headless=new")  # enable if you want faster headless runs
+    options.add_argument("--disable-gpu")
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.page_load_strategy = "eager"
+    options.add_experimental_option(
+        "prefs",
+        {"profile.managed_default_content_settings.images": 2}
+    )
+    driver = webdriver.Chrome(options=options)
+    wait = WebDriverWait(driver, 25)
+    try:
+        driver.get(start_url)
+        wait.until(EC.element_to_be_clickable((By.XPATH, "/html/body/div[2]/form"))).click()
+        wait.until(EC.element_to_be_clickable((By.ID, "menu_desktop545"))).click()
+        section7 = wait.until(
+            EC.presence_of_element_located(
+                (By.XPATH, "//a[contains(.,'List of designated persons under Section 7')]")
+            )
+        )
+        section7_url = section7.get_attribute("href")
+        driver.get(section7_url)
+        body_text = wait.until(EC.presence_of_element_located((By.TAG_NAME, "body"))).text
+        m = re.search(
+            r"(List of Designated Persons\s*\(Updated as of\s*\d{1,2}\s+[A-Za-z]+\s+\d{4}\))",
+            body_text
+        )
+        if not m:
+            raise RuntimeError("Could not find the exact heading: 'List of Designated Persons (Updated as of ...)'")
+        heading = m.group(1).strip()
+        heading_hash = hashlib.sha256(heading.encode("utf-8")).hexdigest()
+        print(heading)
+        print(heading_hash)
+    finally:
+        driver.quit()
+TH_AMLO_SANCTIONS()

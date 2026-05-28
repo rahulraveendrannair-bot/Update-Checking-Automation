@@ -1,0 +1,18 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_WY_DH_PEL():
+    page = "https://health.wyo.gov/healthcarefin/medicaid/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    iframe = driver.find_element(By.XPATH, '//*[@id="post-158"]/div/div/div/div/div[3]/div/div/div/div/div/p[3]/iframe')
+    driver.switch_to.frame(iframe)
+    Link = driver.find_element(By.XPATH, "//h3[contains(text(),'Wyoming Medicaid Provider Exclusion List')]//following::div").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_WY_DH_PEL()

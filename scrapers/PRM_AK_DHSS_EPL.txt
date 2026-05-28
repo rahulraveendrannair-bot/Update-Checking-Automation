@@ -1,0 +1,24 @@
+import hashlib
+import requests
+import time
+import re
+import pdfplumber
+from pypdf import PdfReader
+from io import BytesIO
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def PRM_AK_DHSS_EPL():
+    url1="https://health.alaska.gov/media/h3ueo2kf/alaska-medical-assistance-excluded-provider-list.pdf"
+    response = requests.get(url1)
+    response.raise_for_status()
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        full_text += text.strip()
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_AK_DHSS_EPL()

@@ -1,0 +1,149 @@
+import time, hashlib
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from bs4 import BeautifulSoup
+def get_next_button(driver):
+    selectors = [
+        # ── aria-label variants ──────────────────────────────────────────────
+        (By.CSS_SELECTOR, "[aria-label='Go to next page']"),
+        (By.CSS_SELECTOR, "[aria-label='Next page']"),
+        (By.CSS_SELECTOR, "[aria-label='Next Page']"),
+        (By.CSS_SELECTOR, "[aria-label='next']"),
+        (By.CSS_SELECTOR, "[aria-label='Next']"),
+        # ── ServiceNow list / SP widget classes ──────────────────────────────
+        (By.CSS_SELECTOR, ".sn-widget-list-pager .next"),
+        (By.CSS_SELECTOR, ".sn-widget-list-pager [data-direction='next']"),
+        (By.CSS_SELECTOR, "[data-direction='next']"),
+        (By.CSS_SELECTOR, "[data-action='next_page']"),
+        (By.CSS_SELECTOR, ".sp-pagination .next a"),
+        (By.CSS_SELECTOR, ".sp-pagination li.next a"),
+        # ── Bootstrap / generic pagination ───────────────────────────────────
+        (By.CSS_SELECTOR, ".pagination li.next a"),
+        (By.CSS_SELECTOR, ".pagination li.next button"),
+        (By.CSS_SELECTOR, ".pagination .page-item.next .page-link"),
+        (By.CSS_SELECTOR, "li.next > a"),
+        (By.CSS_SELECTOR, "li.next > button"),
+        # ── Icon classes ─────────────────────────────────────────────────────
+        (By.CSS_SELECTOR, "button[class*='next']"),
+        (By.CSS_SELECTOR, "a[class*='next']"),
+        (By.CSS_SELECTOR, "button[class*='forward']"),
+        (By.CSS_SELECTOR, "[class*='pagination'][class*='next']"),
+        # ── Plain text > ─────────────────────────────────────────────────────
+        (By.XPATH, "//button[normalize-space(text())='>']"),
+        (By.XPATH, "//a[normalize-space(text())='>']"),
+        # ── Buttons with > inside span/icon ──────────────────────────────────
+        (By.XPATH, "//button[.//span[normalize-space(text())='>']]"),
+        (By.XPATH, "//a[.//span[normalize-space(text())='>']]"),
+        # ── Buttons containing right-arrow icon spans ─────────────────────────
+        (By.XPATH, "//button[.//*[contains(@class,'right') or contains(@class,'next') or contains(@class,'arrow')]]"),
+    ]
+    for by, sel in selectors:
+        try:
+            els = driver.find_elements(by, sel)
+            for el in els:
+                if el.is_displayed():
+                    return el, sel
+        except Exception:
+            pass
+    return None, None
+def dump_pagination_html(driver):
+    """Print all visible buttons + pagination containers for debugging."""
+    print("\n" + "="*60)
+    print("DEBUG: Could not find Next button. Dumping page info...")
+    print("="*60)
+    html = driver.execute_script("""
+        var results = [];
+        var els = document.querySelectorAll('button, a, [role="button"]');
+        els.forEach(function(el) {
+            if (el.offsetParent !== null || el.offsetWidth > 0) {
+                results.push(el.outerHTML);
+            }
+        });
+        return results.join('\\n---\\n');
+    """)
+    print("VISIBLE BUTTONS / LINKS:\n")
+    print(html[:5000] if html else "(none)")
+    pag = driver.execute_script("""
+        var results = [];
+        var els = document.querySelectorAll('*');
+        els.forEach(function(el) {
+            var cls = (el.className || '').toString().toLowerCase();
+            var id  = (el.id || '').toLowerCase();
+            if (cls.includes('paginat') || cls.includes('pager') || id.includes('paginat')) {
+                results.push(el.outerHTML);
+            }
+        });
+        return results.join('\\n---\\n');
+    """)
+    print("\nPAGINATION CONTAINERS:\n")
+    print(pag[:3000] if pag else "(none — try looking in the buttons above)")
+    print("="*60 + "\n")
+def US_DDTC_POA():
+    page = "https://www.pmddtc.state.gov/ddtc_public?id=ddtc_kb_article_page&sys_id=384b968adb3cd30044f9ff621f961941"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8) 
+    all_rows = []
+    headers = []
+    current_page = 1
+    while True:
+        WebDriverWait(driver, 15).until(
+            EC.presence_of_element_located((By.TAG_NAME, "table"))
+        )
+        time.sleep(2)
+        soup = BeautifulSoup(driver.page_source, "html.parser")
+        table = soup.find("table")
+        if not headers:
+            headers = [th.get_text(strip=True) for th in table.find_all("th")]
+            print(f"Headers: {headers}")
+        tbody = table.find("tbody")
+        trs = tbody.find_all("tr") if tbody else table.find_all("tr")[1:]
+        page_rows = 0
+        for tr in trs:
+            cells = [td.get_text(separator=" ", strip=True) for td in tr.find_all("td")]
+            if cells:
+                if headers and len(cells) == len(headers):
+                    all_rows.append(dict(zip(headers, cells)))
+                else:
+                    all_rows.append({f"col_{i}": v for i, v in enumerate(cells)})
+                page_rows += 1
+        print(f"Page {current_page}: {page_rows} rows (total so far: {len(all_rows)})")
+        next_btn, matched_sel = get_next_button(driver)
+        if not next_btn:
+            dump_pagination_html(driver)
+            print("Stopping — paste the DEBUG output above and share it to get the exact fix.")
+            break
+        print(f"  Next button matched: {matched_sel}")
+        is_disabled = driver.execute_script("""
+            var el = arguments[0];
+            return el.disabled === true
+                || el.getAttribute('disabled') !== null
+                || el.getAttribute('aria-disabled') === 'true'
+                || (el.className || '').includes('disabled')
+                || ((el.parentElement && el.parentElement.className) || '').includes('disabled');
+        """, next_btn)
+        if is_disabled:
+            print("Next button is disabled — reached last page.")
+            break
+        try:
+            driver.execute_script("arguments[0].scrollIntoView({block:'center'});", next_btn)
+            time.sleep(0.5)
+            driver.execute_script("arguments[0].click();", next_btn)
+            current_page += 1
+            time.sleep(3)
+        except Exception as e:
+            print(f"Click failed: {e}")
+            break
+    driver.quit()
+    df = pd.DataFrame(all_rows)
+    print(f"\nTotal rows collected: {len(df)}")
+    print(df.to_string(index=False))
+    output_hash = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_hash)
+US_DDTC_POA()

@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def TT_FIU_DPRK():
+    page = "https://agla.gov.tt/anti-terrorism-unit/atu-proliferation-financing-of-weapons-of-mass-destruction/atu-proliferation-financing-of-weapons-of-mass-destruction/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '/html/body/div[2]/div/div[2]/div[1]/article/div[2]/div/div').text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+TT_FIU_DPRK()

@@ -1,0 +1,35 @@
+import hashlib
+import requests
+import time
+import re
+import pdfplumber
+from pypdf import PdfReader
+from io import BytesIO
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def PA_TREAS_SCI():
+    website = 'https://www.patreasury.gov/divestment/'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    PDF = driver.find_element(By.XPATH, "//*[contains(text(),'Act 44 Report ')]").get_attribute("onclick")
+    print(PDF)
+    PDF_PATH = PDF.split("window.open(")[1].strip("')\"")
+    PDF_PATH_1 = PDF_PATH.lstrip(".")
+    print(PDF_PATH_1)
+    driver.quit()
+    url1="https://www.patreasury.gov/"+PDF_PATH_1
+    response = requests.get(url1)
+    response.raise_for_status()
+    print(response.content)
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    output_date = hashlib.sha256(pdf_bytes).hexdigest()
+    print(output_date)
+PA_TREAS_SCI()

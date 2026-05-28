@@ -1,0 +1,25 @@
+import hashlib
+import time
+import requests
+from io import BytesIO
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def PRM_GA_DCH_EIE():
+    website = 'https://dch.georgia.gov/office-inspector-general/georgia-oig-exclusions-list'
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, '//*[@id="main-content"]/div/div[3]/div[3]/div/main/p[6]/span/span[2]/a').get_attribute("href")
+    print(Content)
+    driver.quit()
+    response = requests.get(Content)
+    response.raise_for_status()
+    output_hash = hashlib.sha256(response.content).hexdigest()
+    print(output_hash)
+PRM_GA_DCH_EIE()

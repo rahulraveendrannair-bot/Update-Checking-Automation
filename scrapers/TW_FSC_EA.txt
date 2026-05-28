@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def TW_FSC_EA():
+    page = "https://www.banking.gov.tw/en/home.jsp?id=93&parentpath=0,86"
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Content = driver.find_element(By.XPATH, "//div[contains(text(),'Topic')]//following::div[5]").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode("utf-8")).hexdigest()
+    print(output_date)
+TW_FSC_EA()

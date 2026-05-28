@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def US_FDA_CI():
+    page = "https://www.accessdata.fda.gov/scripts/SDA/sdNavigation.cfm?sd=clinicalinvestigatorsdisqualificationproceedings&previewMode=true&displayAll=true"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Page2 = driver.find_element(By.XPATH, '//*[@id="user_provided"]/table/tbody/tr/td/table/tbody/tr[6]').text
+    print(Page2)
+    output_date = hashlib.sha256(Page2.encode("utf-8")).hexdigest()
+    print(output_date)
+US_FDA_CI()

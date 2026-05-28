@@ -1,0 +1,24 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def PRM_ID_DHW_MPEL():
+    page = "https://healthandwelfare.idaho.gov/providers/idaho-medicaid-providers/information-medicaid-providers"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(10)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'Medicaid Provider Exclusion List')]").get_attribute("href")
+    print(Link)
+    driver.close()
+    driver = webdriver.Chrome(options=options)
+    driver.get(Link)
+    time.sleep(20)
+    iframe = driver.find_element(By.XPATH, '//*[@id="pdfViewerIFrame"]')
+    driver.switch_to.frame(iframe)
+    Date = driver.find_element(By.XPATH, "//span[contains(text(),'Idaho Medicaid Exclusion List')]//following::span[2]").text
+    print(Date)
+    output_date = hashlib.sha256(Date.encode("utf-8")).hexdigest()
+    print(output_date)
+PRM_ID_DHW_MPEL()

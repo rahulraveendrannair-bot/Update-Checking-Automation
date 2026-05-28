@@ -1,0 +1,21 @@
+import hashlib
+import requests
+import pandas as pd
+import io
+from bs4 import BeautifulSoup
+def PRM_CA_DHCS_SIPL():
+    website = 'https://data.chhs.ca.gov/dataset/provider-suspended-and-ineligible-list-s-i-list'
+    r = requests.get(website).text
+    soup = BeautifulSoup(r, "html.parser")
+    Page1 = soup.find('ul', class_="resource-list")
+    Page2 = Page1.find('div', class_="actions")
+    Page3 = Page2.find('a')
+    HREF = Page3.attrs['href']
+    r1 = requests.get(HREF)
+    r1.raise_for_status()
+    csv_bytes = r1.content
+    df = pd.read_csv(io.BytesIO(csv_bytes), encoding="latin-1")
+    Data = df.to_csv(index=False)
+    output_date = hashlib.sha256(str(Data).encode('utf-8')).hexdigest()
+    print(output_date)
+PRM_CA_DHCS_SIPL()

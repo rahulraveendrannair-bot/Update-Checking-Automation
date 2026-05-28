@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def ZA_FIC_SANCTIONS():
+    page = "https://www.fic.gov.za/compliance/supervision-and-enforcement/sanctions-issued-by-the-fic/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Date = driver.find_element(By.XPATH, "//h2[contains(text(),'Sanctions issued by the FIC')]//following::td").text
+    print(Date)
+    driver.close()
+    output_date = hashlib.sha256(Date.encode("utf-8")).hexdigest()
+    print(output_date)
+ZA_FIC_SANCTIONS()

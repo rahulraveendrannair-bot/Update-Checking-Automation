@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def SG_ACRA_SUSPENSION():
+    page = "https://www.polis.gov.bn/orang-dikehendaki/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link2 = driver.find_element(By.XPATH, '//*[@id="post-4184"]/div/div/div/div/div').text
+    print(Link2)
+    output_date = hashlib.sha256(Link2.encode("utf-8")).hexdigest()
+    print(output_date)
+SG_ACRA_SUSPENSION()
