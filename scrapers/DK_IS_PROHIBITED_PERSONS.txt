@@ -1,0 +1,20 @@
+import time, hashlib
+import requests
+from io import BytesIO
+from bs4 import BeautifulSoup
+from pypdf import PdfReader
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def DK_IS_PROHIBITED_PERSONS():
+    page = "https://us.dk/center-for-dokumentation-og-indsats-mod-ekstremisme/indhentning-og-analyse/forbudslisten/selve-forbudslisten/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'Juridiske')]//following::table[2]").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+DK_IS_PROHIBITED_PERSONS()

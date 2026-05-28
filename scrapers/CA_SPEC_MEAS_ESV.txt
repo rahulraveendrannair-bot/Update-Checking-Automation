@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def CA_SPEC_MEAS_ESV():
+    page = "https://www.international.gc.ca/world-monde/international_relations-relations_internationales/sanctions/esv-vec.aspx?lang=eng"
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, "//h2[contains(text(),'Selected documents')]//following::div[2]").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+CA_SPEC_MEAS_ESV()

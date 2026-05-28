@@ -1,0 +1,19 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def EE_MFA_RUSSIA():
+    page = "https://www.vm.ee/subjektide-nimekiri-vabariigi-valitsuse-sanktsioon-eesti-julgeoleku-ja-huvide-kaitseks-ning-venemaa"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.maximize_window()
+    driver.get(page)
+    Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Luban kõik')]").click()
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    Data = driver.find_element(By.XPATH, '//*[@id="block-mainpagecontent"]/article/div/div/div/div').text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+EE_MFA_RUSSIA()

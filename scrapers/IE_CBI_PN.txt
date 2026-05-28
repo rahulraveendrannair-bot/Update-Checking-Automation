@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def IE_CBI_PN():
+    page = "https://www.centralbank.ie/news-media/legal-notices/prohibition-notices"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, "//*[contains(text(),'Current Prohibition Notices')]//following::h3").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+IE_CBI_PN()

@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def EE_MFA_BELARUS():
+    page = "https://www.vm.ee/en/sanctions-government-republic-view-situation-belarus"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    driver.execute_script("window.scrollTo(0, document.body.scrollHeight);")
+    Link2 = driver.find_element(By.XPATH, '//*[@id="block-mainpagecontent"]/article/div[1]/div/div/div').text
+    print(Link2)
+    output_date = hashlib.sha256(Link2.encode("utf-8")).hexdigest()
+    print(output_date)
+EE_MFA_BELARUS()

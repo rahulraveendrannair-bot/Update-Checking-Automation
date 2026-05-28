@@ -1,0 +1,22 @@
+import hashlib
+import time
+import requests
+import io
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def DOS_CRL():
+    website = 'https://www.state.gov/division-for-counter-threat-finance-and-sanctions/cuba-restricted-list'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    time.sleep(5)
+    #driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/article/section/div/div[4]/div/div/iframe'))
+    Content = driver.find_element(By.XPATH, "//*[contains(text(),'LIST OF RESTRICTED ENTITIES')]/ancestor::div[1]").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+DOS_CRL()

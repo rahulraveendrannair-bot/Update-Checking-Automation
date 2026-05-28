@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def AR_MOJ_RePET_P():
+    page = "https://repet.jus.gob.ar/#personas"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '//*[@id="block-system-main"]/section/div/div/div[6]/div/div/section/div/div[1]').text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+AR_MOJ_RePET_P()

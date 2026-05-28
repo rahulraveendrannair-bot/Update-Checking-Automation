@@ -1,0 +1,31 @@
+import hashlib
+import requests
+import time
+import io
+import pdfplumber
+from pypdf import PdfReader
+from io import BytesIO
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def NY_OGS_IDA():
+    website = 'https://ogs.ny.gov/iran-divestment-act-2012'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    PDF = driver.find_element(By.XPATH, "/html/body/div[3]/div/main/div/div/div[2]/div[2]/div/div/div[3]/article/div/ul/li/div/h3/a").get_attribute('href')
+    print(PDF)
+    driver.quit()
+    response = requests.get(PDF)
+    response.raise_for_status()
+    print(response.content)
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    output_date = hashlib.sha256(pdf_bytes).hexdigest()
+    print(output_date)
+NY_OGS_IDA()

@@ -1,0 +1,21 @@
+import hashlib
+import time
+import requests
+import io
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def CT_DOL_DL():
+    website = 'https://portal.ct.gov/dol/knowledge-base/articles/wage-and-workplace-standards/debarment-lists?language=en_US'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    time.sleep(5)
+    Content = driver.find_element(By.XPATH, "//strong[contains(text(),'Debarment Lists')]/following::a[2]").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+CT_DOL_DL()

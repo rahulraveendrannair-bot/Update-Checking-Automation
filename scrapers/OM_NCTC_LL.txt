@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def OM_NCTC_LL():
+    page = "https://www.nctc.gov.om/TargetedFinancialSanctions/LocalList"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '/html/body/div[1]/main/div[2]').text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+OM_NCTC_LL()

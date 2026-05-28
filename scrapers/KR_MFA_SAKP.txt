@@ -1,0 +1,20 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def KR_MFA_SAKP():
+    website = 'https://www.mofa.go.kr/www/wpge/m_25834/contents.do'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, '//*[@id="contents"]/ul/li/ul/li[2]').text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+KR_MFA_SAKP()

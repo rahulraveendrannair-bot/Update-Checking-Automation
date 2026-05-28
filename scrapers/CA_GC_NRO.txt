@@ -1,0 +1,18 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def CA_GC_NRO():
+    page = "https://science.gc.ca/site/science/en/safeguarding-your-research/guidelines-and-tools-implement-research-security/sensitive-technology-research-and-affiliations-concern/named-research-organizations#top"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, "//*[contains(text(),'Named Research Organizations List')]//following::div").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+CA_GC_NRO()

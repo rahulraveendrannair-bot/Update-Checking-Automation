@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def ES_WA_CNMV():
+    page = "https://www.cnmv.es/portal/ResultadoBusqueda?tipo=1"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'Search for CNMV´s public warnings')]//ancestor::table").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+ES_WA_CNMV()

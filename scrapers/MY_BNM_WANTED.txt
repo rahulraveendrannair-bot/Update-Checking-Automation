@@ -1,0 +1,20 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def MY_BNM_WANTED():
+    website = 'https://www.bnm.gov.my/have-you-seen'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, "//p[contains(text(),'Have You Seen These Individuals?')]//following::div").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+MY_BNM_WANTED()

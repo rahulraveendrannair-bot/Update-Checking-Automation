@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def GB_FCA_UCB():
+    page = "https://register.fca.org.uk/s/search?predefined=U"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, "//h1[contains(text(),'Unregistered Cryptoasset Businesses')]//following::table").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+GB_FCA_UCB()

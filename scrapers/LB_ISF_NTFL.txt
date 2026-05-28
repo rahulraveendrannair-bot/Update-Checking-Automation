@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def LB_ISF_NTFL():
+    page = "https://isf.gov.lb/national-terrorism-financial-list/"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link2 = driver.find_element(By.XPATH, "//a[contains(text(),'Click')]").text
+    print(Link2)
+    driver.close()
+    output_date = hashlib.sha256(Link2.encode("utf-8")).hexdigest()
+    print(output_date)
+LB_ISF_NTFL()

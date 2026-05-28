@@ -1,0 +1,18 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def MY_SCM_IA():
+    page = "https://www.sc.com.my/investor-alert-list"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(10)
+    #iframe = driver.find_element(By.XPATH, '//*[@id="myFrame"]')
+    #driver.switch_to.frame(iframe)
+    Data = driver.find_element(By.XPATH, "//b[contains(text(),'Name')]//ancestor::div").text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+MY_SCM_IA()

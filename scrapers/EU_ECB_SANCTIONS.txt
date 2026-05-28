@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def EU_ECB_SANCTIONS():
+    page = "https://www.ecb.europa.eu/ecb/sanctions/html/index.en.html"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Link = driver.find_element(By.XPATH, "//main").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+EU_ECB_SANCTIONS()

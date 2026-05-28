@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def JP_METI():
+    page = "https://www.meti.go.jp/policy/anpo/englishpage.html"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'Review of the End User List')]").text
+    print(Link)
+    driver.close()
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+JP_METI()

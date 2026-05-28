@@ -1,0 +1,21 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def HK_ICAC_WL():
+    website = 'https://www.icac.org.hk/en/rc/wanted/index.html'
+    options = Options()
+    options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    time.sleep(5)
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, '//*[@id="mainContent"]').text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+HK_ICAC_WL()

@@ -1,0 +1,24 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def DOS_SDP():
+    website = 'https://www.pmddtc.state.gov/ddtc_public?id=ddtc_kb_article_page&sys_id=7188dac6db3cd30044f9ff621f961914'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    time.sleep(5)
+    #driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/article/section/div/div[4]/div/div/iframe'))
+    Date1= driver.find_element(By.XPATH, "//h1[contains(text(),'Statutorily Debarred Parties')]/following::div[contains(text(),'Notice Date')]").click()
+    time.sleep(2)
+    Date2 = driver.find_element(By.XPATH, "//h1[contains(text(),'Statutorily Debarred Parties')]/following::div[contains(text(),'Notice Date')]").click()
+    time.sleep(2)
+    Content = driver.find_element(By.XPATH, "//h1[contains(text(),'Statutorily Debarred Parties')]/following::div[contains(text(),'Notice Date')]/following::td[4]").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+DOS_SDP()

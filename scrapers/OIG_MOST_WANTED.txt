@@ -1,0 +1,43 @@
+import requests
+import hashlib
+from bs4 import BeautifulSoup
+def OIG_MOST_WANTED():
+    BASE_URL = "https://oig.hhs.gov"
+    START_URL = f"{BASE_URL}/fraud/fugitives/"
+    HEADERS = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36"}
+
+    session = requests.Session()
+    session.headers.update(HEADERS)
+
+    names = []
+    page = 1
+
+    while True:
+        url = START_URL if page == 1 else f"{START_URL}?page={page}"
+        resp = session.get(url, timeout=20)
+        resp.raise_for_status()
+        soup = BeautifulSoup(resp.text, "html.parser")
+
+        links = soup.find_all("a", href=lambda h: h and h.startswith("/fraud/fugitives/")
+                                                  and h != "/fraud/fugitives/")
+        if not links:
+            break
+
+        for a in links:
+            name = a.get_text(strip=True)
+            if name:
+                names.append(name)
+
+        next_link = soup.find("a", string=lambda t: t and "Next" in t)
+        if not next_link:
+            break
+        page += 1
+
+    print(f"Total fugitives: {len(names)}\n")
+    for i, name in enumerate(names, 1):
+        print(f"{i:>3}. {name}")
+
+    content = "\n".join(names)
+    output_date = hashlib.sha256(content.encode("utf-8")).hexdigest()
+    print(output_date)
+OIG_MOST_WANTED()

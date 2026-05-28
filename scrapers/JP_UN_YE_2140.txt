@@ -1,0 +1,20 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def JP_UN_YE_2140():
+    website = 'https://www.meti.go.jp/policy/external_economy/trade_control/01_seido/04_seisai/yemen.html'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    #Cookies = driver.find_element(By.XPATH, "//*[contains(text(),'Accept all cookies')]").click()
+    time.sleep(10)
+    Content = driver.find_element(By.XPATH, '//*[@id="ColA2011"]/div[3]').text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+JP_UN_YE_2140()

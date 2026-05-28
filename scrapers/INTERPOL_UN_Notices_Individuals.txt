@@ -1,0 +1,69 @@
+import time
+import json
+import hashlib
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+def INTERPOL_UN_Notices_Individuals():
+    seed_url = "https://www.interpol.int/en/How-we-work/Notices/View-UN-Notices-Individuals"
+    api_url  = "https://ws-public.interpol.int/notices/v1/un/persons"
+    options = Options()
+    # options.add_argument("--headless")   # uncomment for headless mode
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
+    try:
+        print("Fetching INTERPOL UN Notices (Individuals)...")
+        driver.get(seed_url)
+        time.sleep(3)
+        all_entries = []
+        page = 1
+        total = None
+        while True:
+            paged_url = f"{api_url}?resultPerPage=160&page={page}"
+            print(f"  Fetching page {page}: {paged_url}")
+            driver.get(paged_url)
+            time.sleep(2)
+            raw = driver.find_element("tag name", "body").text
+            data = json.loads(raw)
+            if total is None:
+                total = data.get("total", 0)
+                pages_needed = -(-total // 160)  # ceiling division
+                print(f"API reports total: {total} records across {pages_needed} pages")
+            notices = data.get("_embedded", {}).get("notices", [])
+            if not notices:
+                print(f"  No notices returned on page {page}, stopping.")
+                break
+            for notice in notices:
+                entity_id     = notice.get("entity_id", "N/A")
+                forename      = notice.get("forename", "N/A")
+                name          = notice.get("name", "N/A")
+                dob           = notice.get("date_of_birth", "N/A")
+                nats          = notice.get("nationalities", [])
+                nat_str       = ", ".join(nats) if nats else "N/A"
+                un_reference  = notice.get("un_reference", "N/A")
+                sanctions     = notice.get("sanctions_references", [])
+                sanctions_str = ", ".join(sanctions) if sanctions else "N/A"
+                self_href     = notice.get("_links", {}).get("self", {}).get("href", "N/A")
+                entry = (
+                    f"ID: {entity_id} | Name: {forename} {name} | "
+                    f"DOB: {dob} | Nationalities: {nat_str} | "
+                    f"UN Ref: {un_reference} | Sanctions: {sanctions_str} | "
+                    f"URL: {self_href}"
+                )
+                all_entries.append(entry)
+            print(f"  Page {page} done: fetched {len(notices)} (cumulative: {len(all_entries)}/{total})")
+            if len(all_entries) >= total:
+                print("  All records collected.")
+                break
+            page += 1
+            time.sleep(1)
+        Data = "\n".join(all_entries)
+        print(Data)
+        print(f"\nTotal entries extracted: {len(all_entries)}")
+        output_hash = hashlib.sha256(Data.encode("utf-8")).hexdigest()
+        print(output_hash)
+        return Data, output_hash
+    finally:
+        driver.quit()
+if __name__ == "__main__":
+    INTERPOL_UN_Notices_Individuals()

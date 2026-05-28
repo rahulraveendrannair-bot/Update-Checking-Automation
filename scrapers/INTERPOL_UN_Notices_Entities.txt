@@ -1,0 +1,51 @@
+import time
+import json
+import hashlib
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+def INTERPOL_UN_Notices_Entities():
+    api_url = (
+        "https://ws-public.interpol.int/notices/v1/un/entities"
+        "?resultPerPage=160&page=1"
+    )
+    options = Options()
+    # options.add_argument("--headless")   # uncomment for headless mode
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    driver = webdriver.Chrome(options=options)
+    try:
+        print("Fetching INTERPOL UN Notices (Entities)...")
+        driver.get("https://www.interpol.int/en/How-we-work/Notices/View-UN-Notices-Entities")
+        time.sleep(3)
+        driver.get(api_url)
+        time.sleep(2)
+        raw = driver.find_element("tag name", "body").text
+        data = json.loads(raw)
+        total   = data.get("total", 0)
+        notices = data.get("_embedded", {}).get("notices", [])
+        print(f"API reports total: {total} | Retrieved: {len(notices)}")
+        all_entries = []
+        for notice in notices:
+            entity_id     = notice.get("entity_id", "N/A")
+            name          = notice.get("name", "N/A")
+            un_reference  = notice.get("un_reference", "N/A")
+            sanctions     = notice.get("sanctions_references", [])
+            sanctions_str = ", ".join(sanctions) if sanctions else "N/A"
+            self_href     = notice.get("_links", {}).get("self", {}).get("href", "N/A")
+
+            entry = (
+                f"ID: {entity_id} | Name: {name} | "
+                f"UN Ref: {un_reference} | Sanctions: {sanctions_str} | "
+                f"URL: {self_href}"
+            )
+            all_entries.append(entry)
+        Data = "\n".join(all_entries)
+        print(Data)
+        print(f"\nTotal entries extracted: {len(all_entries)}")
+        output_hash = hashlib.sha256(Data.encode("utf-8")).hexdigest()
+        print(output_hash)
+        return Data, output_hash
+    finally:
+        driver.quit()
+if __name__ == "__main__":
+    INTERPOL_UN_Notices_Entities()

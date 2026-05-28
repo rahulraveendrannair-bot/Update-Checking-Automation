@@ -1,0 +1,20 @@
+import hashlib
+import time
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+def EE_FSA_IA():
+    website = 'https://www.fi.ee/en/alerts'
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(website)
+    driver.maximize_window()
+    time.sleep(5)
+    #driver.switch_to.frame(driver.find_element(By.XPATH, '/html/body/div[1]/div[3]/article/section/div/div[4]/div/div/iframe'))
+    Content = driver.find_element(By.XPATH, "//h1[contains(text(),'Investor alerts')]//following::div[@class='views-row'][1]").text
+    print(Content)
+    driver.quit()
+    output_date = hashlib.sha256(Content.encode('utf-8')).hexdigest()
+    print(output_date)
+EE_FSA_IA()

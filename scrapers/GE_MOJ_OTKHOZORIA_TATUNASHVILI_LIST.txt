@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST():
+    page = "https://matsne.gov.ge/ka/document/view/4234552?publication=0"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(8)
+    Link = driver.find_element(By.XPATH, "//table[12]").text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST()

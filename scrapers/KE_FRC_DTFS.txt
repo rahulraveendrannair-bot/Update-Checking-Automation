@@ -1,0 +1,24 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def KE_FRC_DTFS():
+    page = "https://www.frc.go.ke/?page_id=193"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'Domestic List Kenya')]").get_attribute("href")
+    print(Link)
+    driver.close()
+    response = requests.get(Link)
+    response.raise_for_status()
+    excel_bytes = response.content
+    df = pd.read_excel(io.BytesIO(excel_bytes))
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_string(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+KE_FRC_DTFS()

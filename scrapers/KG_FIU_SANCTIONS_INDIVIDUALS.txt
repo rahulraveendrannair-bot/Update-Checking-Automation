@@ -1,0 +1,34 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from pypdf import PdfReader
+from bs4 import BeautifulSoup
+from io import BytesIO
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.devtools.v143.dom import get_attributes
+def KG_FIU_SANCTIONS_INDIVIDUALS():
+    page = "https://fiu.gov.kg/sked/9"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, "//*[contains(text(),'PDF')]").get_attribute("href")
+    print(Link)
+    driver.close()
+    response = requests.get(Link)
+    soup = BeautifulSoup(response.content, "html.parser")
+    response.raise_for_status()
+    pdf_bytes = response.content
+    pdf_file = BytesIO(pdf_bytes)
+    reader = PdfReader(pdf_file)
+    full_text = ""
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        full_text += text.strip()
+        print(full_text)
+    output_date = hashlib.sha256(full_text.encode("utf-8")).hexdigest()
+    print(output_date)
+KG_FIU_SANCTIONS_INDIVIDUALS()

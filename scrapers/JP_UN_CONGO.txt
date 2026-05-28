@@ -1,0 +1,18 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def JP_UN_CONGO():
+    page = "https://www.meti.go.jp/policy/external_economy/trade_control/01_seido/04_seisai/CongoRD.html"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(10)
+    #iframe = driver.find_element(By.XPATH, '//*[@id="myFrame"]')
+    #driver.switch_to.frame(iframe)
+    Data = driver.find_element(By.XPATH, '//*[@id="ColA2011"]/div[3]/table').text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+JP_UN_CONGO()

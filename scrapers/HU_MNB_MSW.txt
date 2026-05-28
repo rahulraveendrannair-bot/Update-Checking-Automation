@@ -1,0 +1,73 @@
+import hashlib
+import openpyxl
+import json
+import time
+import os
+import glob
+import tempfile
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def HU_MNB_MSW():
+    download_dir = tempfile.mkdtemp()
+    print(f"Download dir : {download_dir}")
+    options = Options()
+    options.add_argument("--no-sandbox")
+    options.add_argument("--disable-dev-shm-usage")
+    options.add_experimental_option("prefs", {
+        "download.default_directory": download_dir,
+        "download.prompt_for_download": False,
+        "download.directory_upgrade": True,
+        "safebrowsing.enabled": True,
+    })
+    driver = webdriver.Chrome(options=options)
+    driver.get(
+        "https://www.fda.gov/inspections-compliance-enforcement-and-criminal-investigations"
+        "/compliance-actions-and-activities/warning-letters"
+    )
+    wait = WebDriverWait(driver, 30)
+    print("Waiting for Export Excel button...")
+    export_btn = wait.until(
+        EC.element_to_be_clickable(
+            (By.CSS_SELECTOR, "button[class*='excel-export']")
+        )
+    )
+    print(f"Found button: '{export_btn.text}'")
+    time.sleep(3)
+    driver.execute_script("arguments[0].click();", export_btn)
+    print("Clicked Export Excel — waiting for download...")
+    xlsx_file = None
+    for i in range(120):
+        files = glob.glob(os.path.join(download_dir, "*.xlsx"))
+        complete = [f for f in files if not f.endswith(".crdownload")]
+        if complete:
+            xlsx_file = complete[0]
+            print(f"Download complete: {xlsx_file}")
+            break
+        time.sleep(1)
+        if (i + 1) % 10 == 0:
+            print(f"  Still waiting... {i+1}s")
+    driver.quit()
+    if not xlsx_file:
+        print("Download timed out.")
+        return None
+    print("\nParsing XLSX...")
+    wb = openpyxl.load_workbook(xlsx_file, read_only=True, data_only=True)
+    ws = wb.active
+    rows = list(ws.iter_rows(values_only=True))
+    wb.close()
+    col_headers = [str(h) if h is not None else "" for h in rows[0]]
+    data_rows = rows[1:]
+    print(f"Columns      : {col_headers}")
+    print(f"Total rows   : {len(data_rows)}")
+    print(f"Sample:\n{json.dumps(dict(zip(col_headers, [str(v) for v in data_rows[0]])), indent=2)}")
+    with open(xlsx_file, "rb") as f:
+        file_bytes = f.read()
+    output_hash = hashlib.sha256(file_bytes).hexdigest()
+    print(output_hash)
+    os.remove(xlsx_file)
+    os.rmdir(download_dir)
+    return output_hash, data_rows
+HU_MNB_MSW()

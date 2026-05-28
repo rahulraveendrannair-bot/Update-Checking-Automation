@@ -1,0 +1,19 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def DK_DIS_ENTRY_BAN():
+    page = "https://nyidanmark.dk/da/Ord-og-begreber/US/Religi%C3%B8se-forkyndere/Religi%C3%B8se-forkyndere-med-indrejseforbud/?anchor=7C5D2D143D284E4EB2829BA5F0F04837&callbackItem=C0848E0180C34017BFB14DC9BC116572&callbackAnchor=608DF21DB20C40B68646A6B6804E595D7C5D2D143D284E4EB2829BA5F0F04837"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '//*[@id="main-wrapper"]/div[3]/main/div[2]/div/section[1]/article').text
+    print(Link)
+    driver.close()
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+DK_DIS_ENTRY_BAN()

@@ -1,0 +1,16 @@
+import time, io, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def FBI_TOP_10():
+    page = "https://www.fbi.gov/wanted/topten"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Link = driver.find_element(By.XPATH, '//*[@id="query-results-0f737222c5054a81a120bce207b0446a"]/ul').text
+    print(Link)
+    output_date = hashlib.sha256(Link.encode("utf-8")).hexdigest()
+    print(output_date)
+FBI_TOP_10()

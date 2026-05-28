@@ -1,0 +1,59 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def NG_NIGSAC_ENTITIES():
+    page = "https://nigsac.gov.ng/IndSancList"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "table tbody tr"))
+    )
+    driver.execute_script("""
+        var tables = document.querySelectorAll('table');
+        tables.forEach(function(t) {
+            if ($.fn && $.fn.dataTable && $.fn.dataTable.isDataTable(t)) {
+                $(t).DataTable().page.len(-1).draw();
+            }
+        });
+    """)
+    time.sleep(2)
+    try:
+        length_selects = driver.find_elements(By.CSS_SELECTOR, "select[name*='DataTables_Table']")
+        for sel in length_selects:
+            for opt in sel.find_elements(By.TAG_NAME, "option"):
+                if opt.get_attribute("value") == "-1" or opt.text.strip().lower() == "all":
+                    opt.click()
+                    break
+        time.sleep(2)
+    except Exception:
+        pass
+    raw = driver.execute_script("""
+        var table = document.querySelectorAll('table')[1];
+        var rows = table.querySelectorAll('tbody tr');
+        var result = [];
+        rows.forEach(function(row) {
+            var cells = row.querySelectorAll('td');
+            if (cells.length >= 4) {
+                result.push({
+                    'S/N':         cells[0].innerText.trim(),
+                    'Entity Name': cells[1].innerText.trim(),
+                    'Comments':    cells[2].innerText.trim(),
+                    'Record Date': cells[3].innerText.trim()
+                });
+            }
+        });
+        return result;
+    """)
+    driver.close()
+    df = pd.DataFrame(raw)
+    print(df.to_string(index=False))
+    output_date = hashlib.sha256(df.to_csv(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+NG_NIGSAC_ENTITIES()

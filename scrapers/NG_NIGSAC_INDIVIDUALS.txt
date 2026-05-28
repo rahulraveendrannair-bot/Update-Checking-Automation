@@ -1,0 +1,56 @@
+import time, io, hashlib
+import requests
+import pandas as pd
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+def NG_NIGSAC_INDIVIDUALS():
+    page = "https://nigsac.gov.ng/IndSancList"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    WebDriverWait(driver, 15).until(
+        EC.presence_of_element_located((By.CSS_SELECTOR, "table tbody tr"))
+    )
+    driver.execute_script("""
+        var tables = document.querySelectorAll('table');
+        tables.forEach(function(t) {
+            if ($.fn && $.fn.dataTable && $.fn.dataTable.isDataTable(t)) {
+                $(t).DataTable().page.len(-1).draw();
+            }
+        });
+    """)
+    time.sleep(2)
+    try:
+        length_selects = driver.find_elements(By.CSS_SELECTOR, "select[name*='DataTables_Table']")
+        for sel in length_selects:
+            for opt in sel.find_elements(By.TAG_NAME, "option"):
+                if opt.get_attribute("value") == "-1" or opt.text.strip().lower() == "all":
+                    opt.click()
+                    break
+        time.sleep(2)
+    except Exception:
+        pass
+    tables = driver.find_elements(By.TAG_NAME, "table")
+    rows = tables[0].find_elements(By.TAG_NAME, "tr")
+    data = []
+    for row in rows[1:]:
+        cols = row.find_elements(By.TAG_NAME, "td")
+        if len(cols) >= 6:
+            data.append({
+                "S/N":           cols[0].text.strip(),
+                "First Name":    cols[1].text.strip(),
+                "Surname":       cols[2].text.strip(),
+                "Nationality":   cols[3].text.strip(),
+                "Birth Country": cols[4].text.strip(),
+                "Record Date":   cols[5].text.strip(),
+            })
+    driver.close()
+    df = pd.DataFrame(data)
+    print(df.to_csv(index=False))
+    output_date = hashlib.sha256(df.to_csv(index=False).encode("utf-8")).hexdigest()
+    print(output_date)
+NG_NIGSAC_INDIVIDUALS()

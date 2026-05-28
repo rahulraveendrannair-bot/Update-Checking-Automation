@@ -1,0 +1,16 @@
+import time, hashlib
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.chrome.options import Options
+def GG_GFSC_DD():
+    page = "https://www.gfsc.gg/commission/enforcement/disqualified-directors"
+    options = Options()
+    #options.add_argument("--headless")
+    driver = webdriver.Chrome(options=options)
+    driver.get(page)
+    time.sleep(5)
+    Data = driver.find_element(By.XPATH, '//*[@id="block-gfsc-theme-partial-rows"]/div/section[2]/div').text
+    print(Data)
+    output_date = hashlib.sha256(Data.encode('utf-8')).hexdigest()
+    print(output_date)
+GG_GFSC_DD()
