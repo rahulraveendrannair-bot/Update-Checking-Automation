@@ -2,7 +2,7 @@
 hash_manager.py
 ===============
 Runs all 175 RPS scrapers, captures their SHA-256 hashes, and updates
-RPS_Updates.xlsx with full guardrails:
+RPS Updates.xlsx with full guardrails:
 
   • Timestamped backup before every write
   • Old Hash Value ← New Hash Value  (shift, with archive protection)
