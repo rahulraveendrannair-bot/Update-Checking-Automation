@@ -88,5 +88,6 @@ jobs:
             RPS_Updates.xlsx
             logs/
             backups/
+            reports/
           if-no-files-found: ignore
           retention-days: 90
