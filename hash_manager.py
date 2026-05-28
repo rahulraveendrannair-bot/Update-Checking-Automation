@@ -2,7 +2,7 @@
 hash_manager.py
 ===============
 Runs all 175 RPS scrapers, captures their SHA-256 hashes, and updates
-RPS Updates.xlsx with full guardrails:
+RPS_Updates.xlsx with full guardrails:
 
   • Timestamped backup before every write
   • Old Hash Value ← New Hash Value  (shift, with archive protection)
@@ -455,6 +455,154 @@ def write_audit_sheet(wb, run_ts: str, stats: dict, logger: logging.Logger) -> N
 
 
 # ─────────────────────────────────────────────────────────────────────────────
+# CHANGE REPORT  —  separate Excel with only yellow (changed) rows
+# ─────────────────────────────────────────────────────────────────────────────
+def generate_change_report(
+    ws,
+    col_map: dict,
+    stats: dict,
+    run_ts: str,
+    report_dir: str,
+    logger: logging.Logger,
+) -> str | None:
+    """
+    Creates a standalone Excel report containing ONLY the RPS lists whose
+    hash changed (yellow rows).  Saved to report_dir/change_report_<ts>.xlsx.
+    Returns the report file path, or None if there were no changes.
+    """
+    changed = stats.get("changed_rows", [])
+    if not changed:
+        logger.info("Change report: no changed rows — report not generated.")
+        return None
+
+    os.makedirs(report_dir, exist_ok=True)
+    ts          = datetime.now().strftime("%Y%m%d_%H%M%S")
+    report_path = os.path.join(report_dir, f"change_report_{ts}.xlsx")
+
+    # ── Build report workbook ─────────────────────────────────────────────────
+    rb  = openpyxl.Workbook()
+
+    # ── Sheet 1: Changed RPS Lists ────────────────────────────────────────────
+    rws = rb.active
+    rws.title = "Changed RPS Lists"
+
+    # Header
+    HDR_FILL = PatternFill("solid", fgColor="1F4E79")
+    HDR_FONT = Font(bold=True, color="FFFFFF", name="Arial", size=11)
+    CTR      = Alignment(horizontal="center", vertical="center")
+    THIN     = Side(style="thin", color="BFBFBF")
+    BDR      = Border(left=THIN, right=THIN, top=THIN, bottom=THIN)
+
+    headers = ["#", "RPS List", "Old Hash Value", "New Hash Value", "Status"]
+    rws.append(headers)
+    for cell in rws[1]:
+        cell.fill      = HDR_FILL
+        cell.font      = HDR_FONT
+        cell.alignment = CTR
+        cell.border    = BDR
+    rws.row_dimensions[1].height = 22
+
+    # Collect changed rows from the main sheet
+    col_rps = col_map[COL_RPS]
+    col_old = col_map[COL_OLD]
+    col_new = col_map[COL_NEW]
+
+    changed_set = set(changed)
+    row_num     = 1
+
+    CHANGED_FILL = PatternFill("solid", fgColor="FFF2CC")   # yellow
+    DATA_FONT    = Font(name="Arial", size=10)
+
+    for row_idx in range(2, ws.max_row + 1):
+        rps_name = ws.cell(row=row_idx, column=col_rps).value
+        if not rps_name or str(rps_name).strip() not in changed_set:
+            continue
+
+        old_val  = ws.cell(row=row_idx, column=col_old).value or ""
+        new_val  = ws.cell(row=row_idx, column=col_new).value or ""
+        status   = "CHANGED"
+
+        rws.append([row_num, str(rps_name).strip(), str(old_val), str(new_val), status])
+
+        # Style the data row
+        data_row = rws.max_row
+        for col_i, cell in enumerate(rws[data_row], start=1):
+            cell.font   = DATA_FONT
+            cell.border = BDR
+            cell.fill   = CHANGED_FILL
+            if col_i == 1:
+                cell.alignment = CTR   # centre the # column
+
+        row_num += 1
+
+    # Column widths
+    rws.column_dimensions["A"].width = 6
+    rws.column_dimensions["B"].width = 45
+    rws.column_dimensions["C"].width = 70
+    rws.column_dimensions["D"].width = 70
+    rws.column_dimensions["E"].width = 12
+    rws.freeze_panes = "A2"
+
+    # ── Sheet 2: Summary ──────────────────────────────────────────────────────
+    ss = rb.create_sheet("Summary")
+
+    SUM_HDR_FILL = PatternFill("solid", fgColor="2E4057")
+    SUM_HDR_FONT = Font(bold=True, color="FFFFFF", name="Arial", size=12)
+    SUM_LBL_FONT = Font(bold=True, name="Arial", size=11)
+    SUM_VAL_FONT = Font(name="Arial", size=11)
+
+    summary_rows = [
+        ("Report Generated",    run_ts),
+        ("Total RPS Records",   stats["total"]),
+        ("Changed (Yellow)",    stats["updated"]),
+        ("Unchanged (White)",   stats["unchanged"]),
+        ("Failed / Null",       stats["null"]),
+        ("",                    ""),
+        ("Changed RPS Lists",   ""),
+    ]
+
+    for label, value in summary_rows:
+        ss.append([label, value])
+
+    # Style header rows
+    for row_i in range(1, len(summary_rows) + 1):
+        lbl_cell = ss.cell(row=row_i, column=1)
+        val_cell = ss.cell(row=row_i, column=2)
+        lbl_cell.font   = SUM_LBL_FONT
+        val_cell.font   = SUM_VAL_FONT
+        lbl_cell.border = BDR
+        val_cell.border = BDR
+
+    # Style "Report Generated" row as dark header
+    ss["A1"].fill = SUM_HDR_FILL
+    ss["A1"].font = SUM_HDR_FONT
+    ss["B1"].fill = SUM_HDR_FILL
+    ss["B1"].font = Font(color="FFFFFF", name="Arial", size=12)
+
+    # Highlight counts
+    COUNT_FILL = PatternFill("solid", fgColor="FFF2CC")
+    for r in [2, 3, 4, 5]:
+        ss.cell(row=r, column=2).fill = COUNT_FILL
+
+    # List all changed RPS names below
+    start_row = len(summary_rows) + 1
+    for i, name in enumerate(sorted(changed), start=1):
+        ss.append(["", f"{i}. {name}"])
+        ss.cell(row=start_row + i - 1, column=2).font   = SUM_VAL_FONT
+        ss.cell(row=start_row + i - 1, column=2).fill   = CHANGED_FILL
+        ss.cell(row=start_row + i - 1, column=2).border = BDR
+        ss.cell(row=start_row + i - 1, column=1).border = BDR
+
+    ss.column_dimensions["A"].width = 22
+    ss.column_dimensions["B"].width = 50
+
+    # ── Save ──────────────────────────────────────────────────────────────────
+    rb.save(report_path)
+    logger.info(f"Change report saved: {report_path}  ({len(changed)} changed rows)")
+    return report_path
+
+
+# ─────────────────────────────────────────────────────────────────────────────
 # MAIN
 # ─────────────────────────────────────────────────────────────────────────────
 def main():
@@ -465,6 +613,8 @@ def main():
                         help=f"Parallel workers for scrapers (default: {MAX_WORKERS})")
     parser.add_argument("--dry-run", "-d", action="store_true",
                         help="Run scrapers but do not write to Excel")
+    parser.add_argument("--report-dir", "-r", default="reports",
+                        help="Folder for change reports (default: reports)")
     args = parser.parse_args()
 
     run_ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
@@ -553,8 +703,17 @@ def main():
         shutil.copy2(backup_path, args.file)
         sys.exit(1)
 
-    # ── STEP 5: Comparison summary ────────────────────────────────────────────
-    logger.info("STEP 5: Change comparison summary")
+    # ── STEP 5: Generate change report ───────────────────────────────────────
+    report_path = generate_change_report(
+        ws, col_map, stats, run_ts, args.report_dir, logger
+    )
+    if report_path:
+        logger.info(f"Change report: {report_path}")
+    else:
+        logger.info("Change report: no changes detected — no report generated.")
+
+    # ── STEP 6: Comparison summary ────────────────────────────────────────────
+    logger.info("STEP 6: Change comparison summary")
     logger.info(f"  Total RPS records  : {stats['total']}")
     logger.info(f"  Hashes updated     : {stats['updated']}")
     logger.info(f"  Hashes unchanged   : {stats['unchanged']}")
