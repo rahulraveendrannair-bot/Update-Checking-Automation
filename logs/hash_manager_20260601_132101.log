@@ -1,0 +1,267 @@
+2026-06-01 13:21:01,709  INFO      Log file: logs/hash_manager_20260601_132101.log
+2026-06-01 13:21:01,710  INFO      ======================================================================
+2026-06-01 13:21:01,710  INFO      RPS Hash Manager  —  run started at 2026-06-01 13:21:01
+2026-06-01 13:21:01,710  INFO      Target file : RPS_Updates.xlsx
+2026-06-01 13:21:01,710  INFO      Workers     : 20
+2026-06-01 13:21:01,710  INFO      Dry-run     : False
+2026-06-01 13:21:01,710  INFO      ======================================================================
+2026-06-01 13:21:01,710  DEBUG     File-lock check passed.
+2026-06-01 13:21:01,710  INFO      Backup created: backups/RPS_Updates_backup_20260601_132101.xlsx
+2026-06-01 13:21:01,722  INFO      Loaded workbook — sheet 'Sheet1', 175 data rows.
+2026-06-01 13:21:01,722  INFO      Schema OK — columns: {'RPS List': 1, 'Old Hash Value': 2, 'New hash Value': 3}
+2026-06-01 13:21:01,722  INFO      Found 175 RPS list entries.
+2026-06-01 13:21:01,723  INFO      STEP 1: Shifting New Hash Value → Old Hash Value …
+2026-06-01 13:21:01,723  INFO      Shifted 68 'New Hash Value' entries → 'Old Hash Value'.
+2026-06-01 13:21:01,723  INFO      STEP 2: Running scrapers in parallel …
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'INTERPOL_UN_Notices_Entities' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'INTERPOL_UN_Notices_Individuals' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'KG_FIU_SANCTIONS_ENTITIES' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'KG_FIU_SANCTIONS_INDIVIDUALS' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'PRM_AR_DHS_EP' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'PRM_FL_DMS_CVL' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'US_DDTC_POA' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'US_NCDST_IFD_LIST' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'US_RFJ_WT' — will record null hash.
+2026-06-01 13:21:03,971  WARNING   No scraper found for 'ZA_FIC_TFS' — will record null hash.
+2026-06-01 13:21:03,971  INFO      Running 165 scrapers with 20 workers …
+2026-06-01 13:21:18,519  WARNING     ✘  CA_GC_NRO                                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:21,138  WARNING     ✘  CI_ADB_DEBARRED_ENTITIES                            Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:24,980  INFO        ✔  BN_BDCB_AL                                          hash=None
+2026-06-01 13:21:25,155  INFO        ✔  DOC_BIS_RL                                          hash=None
+2026-06-01 13:21:25,658  INFO        ✔  CH_UN_COTE_DIVOIRE_1572                             hash=None
+2026-06-01 13:21:25,980  INFO        ✔  DK_IS_PROHIBITED_PERSONS                            hash=None
+2026-06-01 13:21:26,320  INFO        ✔  DK_DIS_ENTRY_BAN                                    hash=None
+2026-06-01 13:21:26,742  INFO        ✔  CT_DOL_DL                                           hash=None
+2026-06-01 13:21:26,829  INFO        ✔  DK_IS_PROHIBITED_ENTITIES                           hash=None
+2026-06-01 13:21:27,255  INFO        ✔  CA_SPEC_MEAS_SRILANKA                               hash=None
+2026-06-01 13:21:27,591  INFO        ✔  CA_SPEC_MEAS_ESV                                    hash=None
+2026-06-01 13:21:27,898  INFO        ✔  CA_SPEC_MEAS_MOLDOVA                                hash=None
+2026-06-01 13:21:28,014  INFO        ✔  CA_SPEC_MEAS_GUATEMALA                              hash=None
+2026-06-01 13:21:28,274  INFO        ✔  CA_SPEC_MEAS_SUDAN                                  hash=None
+2026-06-01 13:21:28,381  INFO        ✔  AR_NIS_CPL                                          hash=None
+2026-06-01 13:21:29,754  INFO        ✔  CA_SPEC_MEAS_HAMAS_TA                               hash=None
+2026-06-01 13:21:31,650  WARNING     ✘  DOS_CRL                                             Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:34,728  INFO        ✔  CT_DSS_AAL                                          hash=None
+2026-06-01 13:21:36,932  WARNING     ✘  EU_EBRD_INELIGIBLE_ENTITIES                         Message: unknown error: net::ERR_CONNECTION_RESET
+  (Session info: chrome=148.0.
+2026-06-01 13:21:39,982  WARNING     ✘  DOS_TEL                                             Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:41,596  INFO        ✔  DOS_ADP                                             hash=None
+2026-06-01 13:21:42,276  WARNING     ✘  ES_NPC_TERRORISTS                                   Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:44,134  INFO        ✔  EE_MFA_HR                                           hash=e4fd0143e2c774595c60b307396849dcd3b6d001cc3dbdc82ba7c3557f9aa3e0
+2026-06-01 13:21:44,230  INFO        ✔  BD_POLICE_WANTED                                    hash=None
+2026-06-01 13:21:46,951  INFO        ✔  ES_WA_CNMV                                          hash=c0c6681a21424a4a5ca75742f21cf8b600e126382235be07570849cca7280559
+2026-06-01 13:21:48,321  INFO        ✔  EE_MFA_BELARUS                                      hash=b49d363fea1698d0cbff18399767485ef9270ddbee1a1a7670e125462d0fab47
+2026-06-01 13:21:48,998  INFO        ✔  EE_FSA_IA                                           hash=8f5304ae2f1524f86cd781e21057001c1e3be04eda31d4469e88d0453e93c4b9
+2026-06-01 13:21:50,616  WARNING     ✘  FBI_MWT                                             Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:50,629  WARNING     ✘  FBI_LAW_ENFORCEMENT                                 Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:50,781  INFO        ✔  EE_MFA_RUSSIA                                       hash=218699a04a01aab623a77dade4c954dfdf5f161c226000f1f66f12104d70ddfb
+2026-06-01 13:21:52,955  WARNING     ✘  FBI_SI                                              Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:53,480  WARNING     ✘  EU_EC_EDES                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:54,982  WARNING     ✘  FBI_TOP_10                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:21:55,723  INFO        ✔  ES_BOS_SANCTIONS                                    hash=d8f3558dd1ac550c39aa10e9be6893687468f705c175768e30209db3c85a4c53
+2026-06-01 13:21:55,889  INFO        ✔  EU_ECB_SANCTIONS                                    hash=fc1c7d780c98b18ff17a0109a346316342ad815013763d1bd245c37b08b5c02b
+2026-06-01 13:21:57,874  WARNING     ✘  EU_EUROPOL_MWF                                      Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:00,745  WARNING     ✘  GB_FCA_UCB                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:04,198  INFO        ✔  AR_MOJ_RePET_E                                      hash=None
+2026-06-01 13:22:04,476  INFO        ✔  GG_GFSC_DD                                          hash=a14038d31708de4f8a5594ee7ca8166907baa31b2cd2e63811bb6fefb7b4c0a0
+2026-06-01 13:22:04,497  INFO        ✔  EU_EIB_LOE                                          hash=0c241186f021344adbd702a2597e4d322f38402077d02d4cb067154deca3c935
+2026-06-01 13:22:07,932  WARNING     ✘  IL_MOF_WMD                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:08,252  INFO        ✔  GB_OFSI_TR_MP                                       hash=f68f761f9f6c1ee104f780c7cf09c125c05aa1405a1f7d03a63e2ddf7d5820fc
+2026-06-01 13:22:09,696  WARNING     ✘  IM_FSA_ENFORCEMENT                                  Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:10,512  WARNING     ✘  IN_SEBI_DEBARRED_ENTITIES                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:12,289  INFO        ✔  IE_CBI_PN                                           hash=None
+2026-06-01 13:22:12,394  WARNING     ✘  IM_FSA_DD                                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:14,883  INFO        ✔  DOS_SDP                                             hash=e89f3f0ef4c85b90f58f5699acd19a0b412df4204c446142abe65d3e72d8792e
+2026-06-01 13:22:14,947  WARNING     ✘  IN_UNLAWFUL_ASSOCIATION                             Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:20,111  WARNING     ✘  IN_BANNED_ORG                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:20,841  INFO        ✔  HK_ICAC_WL                                          hash=5faecf12b7eb37185942d9c032d2327c8b32c5289aa0f7f0ef6e1b7090294289
+2026-06-01 13:22:22,441  INFO        ✔  GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST                 hash=9ae7d6ec85e9dc4953355a9e61bd3d799eac5b91115e1e13c8383d17e25046b1
+2026-06-01 13:22:27,466  WARNING     ✘  HU_MNB_MSW                                          Message: 
+Stacktrace:
+#0 0x561ca8b1216a <unknown>
+#1 0x561ca850f6b9 <unknown>
+#2
+2026-06-01 13:22:28,666  INFO        ✔  IL_IIPB_PIL                                         hash=None
+2026-06-01 13:22:29,512  INFO        ✔  IL_MOJ_TERR_ORG                                     hash=None
+2026-06-01 13:22:35,958  INFO        ✔  KE_FRC_DTFS                                         hash=None
+2026-06-01 13:22:36,752  INFO        ✔  LB_ISF_NTFL                                         hash=None
+2026-06-01 13:22:41,465  INFO        ✔  AR_MOJ_RePET_P                                      hash=None
+2026-06-01 13:22:42,285  INFO        ✔  LV_FIU_SANCTIONED_SUBJECTS                          hash=None
+2026-06-01 13:22:43,417  INFO        ✔  MC_BT_NAFL                                          hash=3ae9521463edeb0eced6c79ff99009318a605b4c1875f0764719306e04b1d6b6
+2026-06-01 13:22:44,139  WARNING     ✘  MY_BNM_WARNING_LETTERS                              Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:44,851  WARNING     ✘  MN_OSP_SDVR                                         Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:47,751  WARNING     ✘  MY_BNM_WANTED                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:49,722  INFO        ✔  OIG_MOST_WANTED                                     hash=2ea7462f7ccb5b1cc7bf6c3a8eac5c5c44d4909b2e9404333e9ca330011cf2fe
+2026-06-01 13:22:49,722  INFO        ✔  NG_NIGSAC_ENTITIES                                  hash=b21e47b98b75d4565361957498a1199d8b206bb154e60696995c30930a561fbb
+2026-06-01 13:22:51,956  INFO        ✔  MT_MPF_WANTED                                       hash=None
+2026-06-01 13:22:58,183  INFO        ✔  KR_MFA_SAKP                                         hash=1bcc6af80e092cfff3bab5b083f086f509af69dad954ab936d4313969dcd4e40
+2026-06-01 13:22:58,943  WARNING     ✘  NY_OGS_IDA                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:22:59,154  INFO        ✔  MY_SCM_WANTED                                       hash=704036ff26f0814f40d217e04008850bf67888dd39d5b2a064bfabc0288ea17f
+2026-06-01 13:22:59,605  WARNING     ✘  PRM_AL_AMA_SP                                       HTTPSConnectionPool(host='medicaid.alabama.gov', port=443): Max retries exceeded
+2026-06-01 13:22:59,686  INFO        ✔  OM_NCTC_LL                                          hash=2d4327f484c5c1f2080dca40f9492c3fa6bfa0bb542764f35d2a84f55e1c27cd
+2026-06-01 13:22:59,731  INFO        ✔  NO_BLACK_LIST                                       hash=None
+2026-06-01 13:23:01,185  INFO        ✔  PRM_CA_DIR_DC                                       hash=d24bcb920c479fef7e9345323276b8c74e494c8c47c4cb79a6d6209d6790d05d
+2026-06-01 13:23:03,177  INFO        ✔  PRM_CA_DHCS_SIPL                                    hash=1865579aaf348bc2a9ad587813f7591b73c2c942a86615170b3554670aad14b4
+2026-06-01 13:23:05,936  INFO        ✔  NG_NIGSAC_INDIVIDUALS                               hash=None
+2026-06-01 13:23:06,851  INFO        ✔  MY_MHA_MOHA_LIST                                    hash=fca0e583b4034a443821bda0f8672738cac6e91c078cc019c1969be960766078
+2026-06-01 13:23:08,398  INFO        ✔  PE_MEF_DISQUALIFIED_SUPPLIERS                       hash=3495c2faad0dc9d8a6f151c33ce11f7e60b1666b812ac20d8075e55e8e2ae20c
+2026-06-01 13:23:09,526  INFO        ✔  PL_MOF_SRM                                          hash=None
+2026-06-01 13:23:09,837  INFO        ✔  PRM_AK_DHSS_EPL                                     hash=a59b2a097818956c8ba4066f31000f8f97da2c138f3d45430248f8ba09d43af8
+2026-06-01 13:23:15,659  INFO        ✔  PRM_GA_DCH_EIE                                      hash=9d10ee25021a42bf5d64c5056257d78fde267e634a075aaa4b40d812bee48edf
+2026-06-01 13:23:19,997  WARNING     ✘  PRM_IA_DHS_MPSL                                     Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:23:22,530  INFO        ✔  PRM_IL_DHFS_PSL                                     hash=6424d492b6c78b72695a4ecdcca3175b8db0a1516d284c2b1daba763c60a9d49
+2026-06-01 13:23:22,961  INFO        ✔  PRM_HI_DHS_PERL                                     hash=51b08ef9938bb45ef673804ba89c5e5eea02391599e8736362ae7626dff1ed94
+2026-06-01 13:23:24,286  WARNING     ✘  PRM_KY_CHFS_PT                                      Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:23:24,811  INFO        ✔  PRM_IN_FSSA_PT                                      hash=5b10138af207dad51d825b32199e50cb6a6d5138533b41c17ce98bcb85040325
+2026-06-01 13:23:25,446  INFO        ✔  PRM_KS_DHE_TPL                                      hash=d962c6659ca32c7acfa6e2e62e88e685b1bf650f0abcf62ff6c16f6940865235
+2026-06-01 13:23:30,400  INFO        ✔  PRM_LA_DH_AAL                                       hash=96d2ce493afbd69c573a79cb0f93dd0691a390de292afbbb55980ef9c912dfdd
+2026-06-01 13:23:34,402  INFO        ✔  PRM_LA_DOA_DV                                       hash=f95600dbe4b7515fad7acde4481cc0cce4decf85732e935968f8d2b0f9d293a1
+2026-06-01 13:23:35,618  INFO        ✔  PRM_MA_MH_SEMP                                      hash=None
+2026-06-01 13:23:36,692  WARNING     ✘  PRM_DC_DDS_PSL                                      Timeout 30000ms exceeded.
+2026-06-01 13:23:36,710  INFO        ✔  PRM_MD_BPW_CB                                       hash=66e1bef0bd7b07e2497af494d0c4a293672323135f876763fdf12792132d8a22
+2026-06-01 13:23:37,466  INFO        ✔  PRM_MD_MDH_MSPL                                     hash=b4471a9a0184a21afb00ed648b5850b0828fc314f5b4cae05a5baf17dd62ce06
+2026-06-01 13:23:44,030  INFO        ✔  PRM_MI_DHHS_SPL                                     hash=091c5f744a480cbffc96747165b46d16a0180df4c0522e8af991c41236244665
+2026-06-01 13:23:45,497  INFO        ✔  PRM_ID_DHW_MPEL                                     hash=81f0db78033949cad3ca3573547710a1b699b59edb88b8bc054053f87032684e
+2026-06-01 13:23:49,315  INFO        ✔  PRM_MS_DM_SPL                                       hash=dbeac7ceb2efa6046986b3277977fbedd6a46b087b148a31c3917fa47acc50a3
+2026-06-01 13:23:49,424  INFO        ✔  PRM_MT_DPHHS_TMP                                    hash=None
+2026-06-01 13:23:50,100  WARNING     ✘  PRM_NH_DHHS_MPESL                                   Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:23:51,490  INFO        ✔  PRM_NC_DHHS_EPL                                     hash=f2a539248a18f0e2c14ce9bf1844814b3d299d0437b34c5bc9389552d7cf921b
+2026-06-01 13:23:51,815  WARNING     ✘  PRM_MO_DSS_PS                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:23:51,961  INFO        ✔  PRM_NC_DA_DV                                        hash=6534abc9a6ec370e98171e10302ac7098e92763d88fc2b73859a865ec21b352a
+2026-06-01 13:23:55,760  INFO        ✔  PRM_ND_DHS_MPEL                                     hash=e5deec3b2a708f576bc8dde34283ccac1a0cd8a401b26689ff7b015d365ff182
+2026-06-01 13:23:59,942  WARNING     ✘  PRM_NV_OLC_DC                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:02,301  INFO        ✔  MY_SCM_IA                                           hash=d8f34f8159cd03ad5427029f244e099e16fc9360c9ac8ffa2c5dbead3b47159e
+2026-06-01 13:24:03,598  INFO        ✔  PRM_SC_DHHS_EPL                                     hash=None
+2026-06-01 13:24:03,628  WARNING     ✘  PRM_OH_DM_MPESL                                     Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:06,578  WARNING     ✘  PRM_TX_HHS_EP                                       `Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or con
+2026-06-01 13:24:06,582  WARNING     ✘  JP_METI                                             HTTPConnectionPool(host='localhost', port=52935): Read timed out. (read timeout=
+2026-06-01 13:24:06,799  INFO        ✔  PRM_OR_BOLI_IC                                      hash=6e156cb46055efeb7285838436937b4d8b35d5a4df422d02a1f15e9f411dfd07
+2026-06-01 13:24:06,904  INFO        ✔  PRM_SC_SFAA_SD                                      hash=93e0500aba96ec8070238428036e3b086ba000b945defae61b5c4bb9f82f6fe2
+2026-06-01 13:24:07,847  WARNING     ✘  JP_UN_CAR_2134                                      HTTPConnectionPool(host='localhost', port=46417): Read timed out. (read timeout=
+2026-06-01 13:24:08,745  INFO        ✔  PRM_WI_DOT_DSIC                                     hash=6ad1c795d9459f2cfe15aac0c268ada6ca5eb2af707b379d525f43f76baaeecd
+2026-06-01 13:24:09,756  WARNING     ✘  JP_UN_SANCTIONS_SOMALIA                             HTTPConnectionPool(host='localhost', port=47843): Read timed out. (read timeout=
+2026-06-01 13:24:10,171  WARNING     ✘  JP_UN_CONGO                                         HTTPConnectionPool(host='localhost', port=59293): Read timed out. (read timeout=
+2026-06-01 13:24:11,450  INFO        ✔  PRM_PA_DGS_DSL                                      hash=b1ffb6182e3b39e2edae006e55d56d0abbdc953766c90a3d5e0ca5d3e298e569
+2026-06-01 13:24:11,472  WARNING     ✘  JP_UN_SANCTIONS_IRAN                                HTTPConnectionPool(host='localhost', port=57337): Read timed out. (read timeout=
+2026-06-01 13:24:13,998  WARNING     ✘  JP_UN_SANCTIONS_SYRIA                               HTTPConnectionPool(host='localhost', port=39831): Read timed out. (read timeout=
+2026-06-01 13:24:15,648  WARNING     ✘  JP_UN_SANCTIONS                                     HTTPConnectionPool(host='localhost', port=41831): Read timed out. (read timeout=
+2026-06-01 13:24:15,648  INFO        ✔  PRM_NY_DOL_DL                                       hash=5c8cbcffef0ccd2817c80bb9756ae5433aaa9c1a221d5f5db2a9f4c8a76b0074
+2026-06-01 13:24:15,857  INFO        ✔  PRM_NJ_MFD_PER                                      hash=781a7266eacf602892461efb2507f70350e765571785afe5f8f0ed43f93f0c81
+2026-06-01 13:24:15,924  INFO        ✔  PRM_TX_TC_DVL                                       hash=None
+2026-06-01 13:24:17,170  WARNING     ✘  JP_UN_SS_2206                                       HTTPConnectionPool(host='localhost', port=38207): Read timed out. (read timeout=
+2026-06-01 13:24:18,237  WARNING     ✘  JP_UN_YE_2140                                       HTTPConnectionPool(host='localhost', port=42385): Read timed out. (read timeout=
+2026-06-01 13:24:18,724  WARNING     ✘  PRM_WV_WVPD_DV                                      Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:20,594  INFO        ✔  PRM_WA_HCA_PTEL                                     hash=c339d5a4c816c8fe640bb33245ee683bbe1a03ddecbd211cd33b5770b2ff3bee
+2026-06-01 13:24:21,170  INFO        ✔  SECO_SWISS_GUATEMALA                                hash=None
+2026-06-01 13:24:24,878  INFO        ✔  SECO_SWISS_MOLDOVA                                  hash=None
+2026-06-01 13:24:25,131  INFO        ✔  SECO_SWISS_HAMAS                                    hash=None
+2026-06-01 13:24:26,449  WARNING     ✘  SG_MAS_RUSSIA                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:27,518  INFO        ✔  PRM_TN_OPI_TPL                                      hash=123eff993c9338db4825258e12a99915dd30c2dfaa85d2bd722eb4aa7fa934a8
+2026-06-01 13:24:27,797  INFO        ✔  PRM_WV_DHHR_PSE                                     hash=None
+2026-06-01 13:24:28,797  INFO        ✔  SG_ACRA_SUSPENSION                                  hash=None
+2026-06-01 13:24:29,577  INFO        ✔  TR_MTF_ARTICLE_5                                    hash=None
+2026-06-01 13:24:30,401  INFO        ✔  TR_MTF_ARTICLE_7                                    hash=1868912449868cc8572bc8ff350dda7706018bb79c95ed9bd84b486e3ff293eb
+2026-06-01 13:24:30,677  INFO        ✔  TR_MTF_ARTICLE_3                                    hash=None
+2026-06-01 13:24:31,540  INFO        ✔  TR_MTF_ARTICLE_6                                    hash=None
+2026-06-01 13:24:38,673  INFO        ✔  US_DOT_MOST_WANTED                                  hash=f871071363284514472663e563c727a9d4ec90158941ad2a970ab65fbe219806
+2026-06-01 13:24:39,031  INFO        ✔  TH_AMLO_SANCTIONS                                   hash=c32fc899559630a399ab8c58c81bcd18273925656dfeba91aa0b780795c122de
+2026-06-01 13:24:40,158  WARNING     ✘  UA_SSU_WANTED                                       Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:42,762  WARNING     ✘  US_AF_FUGITIVES                                     Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:44,236  INFO        ✔  TREAS_FINCEN_PMLC                                   hash=7e72be5eebbf0dd65b2188eb92c19cbb6e8156d46ad26daf0d04477c5765a9cd
+2026-06-01 13:24:44,335  INFO        ✔  PRM_WY_DH_PEL                                       hash=None
+2026-06-01 13:24:45,690  INFO        ✔  TREAS_FINCEN_ADVISORY                               hash=59dc968b9f1615ef168dd2329aea04b20fddfdd3da0a6446e3672cc305c43782
+2026-06-01 13:24:46,058  INFO        ✔  TT_FIU_HAITI                                        hash=None
+2026-06-01 13:24:46,721  INFO        ✔  TT_FIU_DPRK                                         hash=b1ceda46805367b39634e4c4c7cc43c3220072f4f0ecaf8d1d32c2541725ad05
+2026-06-01 13:24:47,495  INFO        ✔  US_NJL_IDA                                          hash=d1c8a1a9e4a2bc96cb33befae759d29a5356e0b4cd3acfd42df6df75e70e70e3
+2026-06-01 13:24:48,266  INFO        ✔  TW_FSC_EA                                           hash=7b2894d384353c6cf8eaa05bbe1b60004f3585c496c0d365a395e6900afe6cb0
+2026-06-01 13:24:48,669  WARNING     ✘  US_DHS_BFV                                          Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:49,156  INFO        ✔  US_PDGS_IFP_LIST                                    hash=063521cb0e62665252346b33902ad1274d97d37e288297551c6217fa8bedd5ab
+2026-06-01 13:24:50,823  WARNING     ✘  US_FD_OCI_MOST_WANTED_FUGITIVES                     Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:51,395  INFO        ✔  SG_SGX_WATCH_LIST                                   hash=e419e93b2a8c35ef2ac2651ae84039dca8ef527fbac2b31aeb290cf855114018
+2026-06-01 13:24:51,681  WARNING     ✘  PA_TREAS_SCI                                        HTTPConnectionPool(host='localhost', port=50523): Read timed out. (read timeout=
+2026-06-01 13:24:55,240  WARNING     ✘  US_FDA_WL                                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:55,976  WARNING     ✘  US_FDA_CI                                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:57,085  INFO        ✔  US_EPA_FUGITIVES                                    hash=None
+2026-06-01 13:24:57,327  INFO        ✔  US_CBP_UEL                                          hash=2b4810348de492ff6092b30166f4cdb8f6dddabaedaab77645a2c42f91dd59ae
+2026-06-01 13:24:57,909  WARNING     ✘  US_SEC_LR                                           Message: no such element: Unable to locate element: {"method":"xpath","selector"
+2026-06-01 13:24:58,244  WARNING     ✘  US_DEA_MOST_WANTED                                  Message: 
+Stacktrace:
+#0 0x55c3ef4c816a <unknown>
+#1 0x55c3eeec56b9 <unknown>
+#2
+2026-06-01 13:24:58,246  INFO        ✔  TW_CBI_MW                                           hash=da6d77469efe81d9044efb805152571642352f4aa39698f2bd517753db6e4545
+2026-06-01 13:25:02,999  INFO        ✔  US_SS_MWF                                           hash=2c012cb88b5fc23187222d7e521d22331ce2754cfcd703cfcb15f02b74ee4180
+2026-06-01 13:25:04,038  INFO        ✔  ZA_FIC_SANCTIONS                                    hash=20b6f000a58e180c0b81853a00e148d6b13055577deebdf160357c20623f1856
+2026-06-01 13:25:05,625  INFO        ✔  US_OGT_SCI                                          hash=625833d34b5c5ae7af74e338048290ddeb9f0641df34c24c02d513631a92affd
+2026-06-01 13:25:08,840  INFO        ✔  ZA_FSCA_EA                                          hash=None
+2026-06-01 13:25:39,193  INFO        ✔  NG_EFCC_WANTED_PERSON                               hash=97abe1aac9218570b13169c1395f3ecd2651f8d2efa03e9b0c91b0da8f307afb
+2026-06-01 13:26:10,292  INFO        ✔  PRM_NV_DHHS_MSL                                     hash=ff757e8d46ef6c3713b4acc711c8702408f3275f666935af2d5db55661733797
+2026-06-01 13:31:38,539  INFO        ✔  QA_MOI_SANCTIONS_LIST                               hash=661b722535b10cdf0de28fa5864d8c1c864c1c6f60b7b6c8e98e793ad73aff4e
+2026-06-01 13:34:36,646  INFO        ✔  PRM_WA_DOLI_DC                                      hash=None
+2026-06-01 13:34:36,648  WARNING   109 tasks returned null/blank hashes: ['AR_MOJ_RePET_E', 'AR_MOJ_RePET_P', 'AR_NIS_CPL', 'BD_POLICE_WANTED', 'BN_BDCB_AL', 'CA_GC_NRO', 'CA_SPEC_MEAS_ESV', 'CA_SPEC_MEAS_GUATEMALA', 'CA_SPEC_MEAS_HAMAS_TA', 'CA_SPEC_MEAS_MOLDOVA']…
+2026-06-01 13:34:36,648  INFO      STEP 3: Writing new hashes to Excel …
+2026-06-01 13:34:36,656  INFO      Write plan: total=175  updated=54  unchanged=12  null=109  changed=49
+2026-06-01 13:34:36,656  INFO      Changed RPS lists: ['EE_MFA_BELARUS', 'EE_MFA_HR', 'EE_MFA_RUSSIA', 'ES_BOS_SANCTIONS', 'ES_WA_CNMV', 'EU_ECB_SANCTIONS', 'EU_EIB_LOE', 'GB_OFSI_TR_MP', 'GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST', 'HK_ICAC_WL', 'MC_BT_NAFL', 'MY_MHA_MOHA_LIST', 'MY_SCM_WANTED', 'NG_NIGSAC_ENTITIES', 'OIG_MOST_WANTED', 'OM_NCTC_LL', 'PE_MEF_DISQUALIFIED_SUPPLIERS', 'PRM_AK_DHSS_EPL', 'PRM_CA_DIR_DC', 'PRM_GA_DCH_EIE', 'PRM_HI_DHS_PERL', 'PRM_ID_DHW_MPEL', 'PRM_IL_DHFS_PSL', 'PRM_IN_FSSA_PT', 'PRM_KS_DHE_TPL', 'PRM_LA_DOA_DV', 'PRM_MD_BPW_CB', 'PRM_MD_MDH_MSPL', 'PRM_MS_DM_SPL', 'PRM_NC_DA_DV', 'PRM_NC_DHHS_EPL', 'PRM_ND_DHS_MPEL', 'PRM_NJ_MFD_PER', 'PRM_NV_DHHS_MSL', 'PRM_OR_BOLI_IC', 'PRM_SC_SFAA_SD', 'PRM_WA_HCA_PTEL', 'PRM_WI_DOT_DSIC', 'TR_MTF_ARTICLE_7', 'TREAS_FINCEN_ADVISORY', 'TT_FIU_DPRK', 'TW_CBI_MW', 'TW_FSC_EA', 'US_DOT_MOST_WANTED', 'US_NJL_IDA', 'US_OGT_SCI', 'US_PDGS_IFP_LIST', 'US_SS_MWF', 'ZA_FIC_SANCTIONS']
+2026-06-01 13:34:36,708  INFO      Audit Log sheet updated (row 14).
+2026-06-01 13:34:36,708  INFO      STEP 4: Saving workbook …
+2026-06-01 13:34:36,726  INFO      Workbook saved: RPS_Updates.xlsx
+2026-06-01 13:34:36,750  INFO      Change report saved: reports/change_report_20260601_133436.xlsx  (49 changed rows)
+2026-06-01 13:34:36,750  INFO      Change report: reports/change_report_20260601_133436.xlsx
+2026-06-01 13:34:36,750  INFO      STEP 6: Change comparison summary
+2026-06-01 13:34:36,751  INFO        Total RPS records  : 175
+2026-06-01 13:34:36,751  INFO        Hashes updated     : 54
+2026-06-01 13:34:36,751  INFO        Hashes unchanged   : 12
+2026-06-01 13:34:36,751  INFO        Null/failed hashes : 109
+2026-06-01 13:34:36,751  INFO        Changed RPS lists  : 49
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: EE_MFA_BELARUS
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: EE_MFA_HR
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: EE_MFA_RUSSIA
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: ES_BOS_SANCTIONS
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: ES_WA_CNMV
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: EU_ECB_SANCTIONS
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: EU_EIB_LOE
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: GB_OFSI_TR_MP
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: HK_ICAC_WL
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: MC_BT_NAFL
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: MY_MHA_MOHA_LIST
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: MY_SCM_WANTED
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: NG_NIGSAC_ENTITIES
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: OIG_MOST_WANTED
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: OM_NCTC_LL
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: PE_MEF_DISQUALIFIED_SUPPLIERS
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: PRM_AK_DHSS_EPL
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: PRM_CA_DIR_DC
+2026-06-01 13:34:36,751  INFO          ↳ CHANGED: PRM_GA_DCH_EIE
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_HI_DHS_PERL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_ID_DHW_MPEL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_IL_DHFS_PSL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_IN_FSSA_PT
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_KS_DHE_TPL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_LA_DOA_DV
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_MD_BPW_CB
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_MD_MDH_MSPL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_MS_DM_SPL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_NC_DA_DV
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_NC_DHHS_EPL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_ND_DHS_MPEL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_NJ_MFD_PER
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_NV_DHHS_MSL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_OR_BOLI_IC
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_SC_SFAA_SD
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_WA_HCA_PTEL
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: PRM_WI_DOT_DSIC
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: TR_MTF_ARTICLE_7
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: TREAS_FINCEN_ADVISORY
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: TT_FIU_DPRK
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: TW_CBI_MW
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: TW_FSC_EA
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: US_DOT_MOST_WANTED
+2026-06-01 13:34:36,752  INFO          ↳ CHANGED: US_NJL_IDA
+2026-06-01 13:34:36,753  INFO          ↳ CHANGED: US_OGT_SCI
+2026-06-01 13:34:36,753  INFO          ↳ CHANGED: US_PDGS_IFP_LIST
+2026-06-01 13:34:36,753  INFO          ↳ CHANGED: US_SS_MWF
+2026-06-01 13:34:36,753  INFO          ↳ CHANGED: ZA_FIC_SANCTIONS
+2026-06-01 13:34:36,753  INFO      ======================================================================
+2026-06-01 13:34:36,753  INFO      Run complete.  54 updates, 49 changes detected.
+2026-06-01 13:34:36,753  INFO      ======================================================================
