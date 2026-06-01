@@ -26,16 +26,18 @@ jobs:
   scrape:
     name: Run scrapers + update Excel
     runs-on: ubuntu-latest
+    env:
+      FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
     timeout-minutes: 120
 
     steps:
       # ── 1. Checkout ──────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v4.2.2
 
       # ── 2. Python ────────────────────────────────────────────────────────────
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v5.6.0
         with:
           python-version: "3.12"
           cache: pip
@@ -46,7 +48,7 @@ jobs:
 
       # ── 4. Chrome + ChromeDriver ─────────────────────────────────────────────
       - name: Install Chrome
-        uses: browser-actions/setup-chrome@v1
+        uses: browser-actions/setup-chrome@v2
         with:
           chrome-version: stable
 
@@ -84,7 +86,7 @@ jobs:
       # ── 8. Upload artifacts (Excel + logs + backups) ─────────────────────────
       - name: Upload results
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v4.6.2
         with:
           name: rps-results-${{ github.run_number }}
           path: |
