@@ -38,11 +38,11 @@ jobs:
     steps:
       # ── 1. Checkout ──────────────────────────────────────────────────────────
       - name: Checkout repository
-        uses: actions/checkout@v4.2.2
+        uses: actions/checkout@v5
 
       # ── 2. Python ────────────────────────────────────────────────────────────
       - name: Set up Python 3.12
-        uses: actions/setup-python@v5.6.0
+        uses: actions/setup-python@v6
         with:
           python-version: "3.12"
           cache: pip
@@ -91,7 +91,7 @@ jobs:
       # ── 8. Upload artifacts (Excel + logs + backups) ─────────────────────────
       - name: Upload results
         if: always()
-        uses: actions/upload-artifact@v4.6.2
+        uses: actions/upload-artifact@v5
         with:
           name: rps-results-${{ github.run_number }}
           path: |
