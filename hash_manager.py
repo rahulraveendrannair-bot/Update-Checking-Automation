@@ -255,51 +255,57 @@ def _load_scraper(fname: str):
 
 def _run_one(fn_name: str, fn) -> dict:
     """
-    Execute one scraper with a 90s hard timeout.
-    Captures stdout to extract the printed SHA-256 hash.
+    Execute one scraper and return a result dict.
+    Scrapers print() their hash rather than returning it, so we
+    capture stdout and extract the last 64-char hex string as the hash.
+    Retries once on failure with a 10s delay.
     """
-    import io, contextlib, re as _re, signal
+    import io, contextlib, re as _re
 
-    def _timeout_handler(signum, frame):
-        raise TimeoutError(f"{fn_name} exceeded 90s timeout")
-
-    start = time.time()
-    try:
-        signal.signal(signal.SIGALRM, _timeout_handler)
-        signal.alarm(90)
-
+    def _attempt():
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             result = fn()
+        output = buf.getvalue()
 
-        signal.alarm(0)
-        elapsed = time.time() - start
-        output  = buf.getvalue()
-
+        # ── 1. Try return value first ──────────────────────────────────
         h = None
         if isinstance(result, dict):
             h = (result.get("hash") or result.get("output_hash") or "").strip() or None
             if not h and isinstance(result.get("result"), dict):
                 h = (result["result"].get("hash") or
                      result["result"].get("output_hash") or "").strip() or None
-        if not h and isinstance(result, str) and len(result) == 64 \
-                and _re.fullmatch(r"[0-9a-f]{64}", result):
+        if not h and isinstance(result, str) and len(result) == 64                 and _re.fullmatch(r"[0-9a-f]{64}", result):
             h = result
+
+        # ── 2. Fall back to stdout — last SHA-256 hex string ───────────
         if not h:
             matches = _re.findall(r"[0-9a-f]{64}", output)
             if matches:
                 h = matches[-1]
 
-        return {"task": fn_name, "status": "success", "hash": h,
-                "elapsed": elapsed, "output": output}
+        return h, output
 
-    except Exception as exc:
-        signal.alarm(0)
-        elapsed = time.time() - start
-        return {"task": fn_name, "status": "error",
-                "hash": None, "error": str(exc),
-                "traceback": traceback.format_exc(),
-                "elapsed": elapsed}
+    start = time.time()
+    MAX_RETRIES = 2
+    last_exc = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            h, output = _attempt()
+            elapsed = time.time() - start
+            return {"task": fn_name, "status": "success", "hash": h,
+                    "elapsed": elapsed, "output": output}
+        except Exception as exc:
+            last_exc = exc
+            if attempt < MAX_RETRIES:
+                time.sleep(10)   # wait before retry
+
+    elapsed = time.time() - start
+    return {"task": fn_name, "status": "error",
+            "hash": None, "error": str(last_exc),
+            "traceback": traceback.format_exc(),
+            "elapsed": elapsed}
 
 
 def run_all_scrapers(rps_names: list[str], max_workers: int,
