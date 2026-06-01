@@ -292,7 +292,7 @@ with tab1:
     display_df[COL_OLD] = display_df[COL_OLD].fillna("—")
     display_df[COL_NEW] = display_df[COL_NEW].fillna("—")
 
-    styled = display_df.style.applymap(colour_status, subset=["Status"])
+    styled = display_df.style.map(colour_status, subset=["Status"])
 
     st.dataframe(
         styled,
