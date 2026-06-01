@@ -233,20 +233,37 @@ def _load_scraper(fname: str):
 
 
 def _run_one(fn_name: str, fn) -> dict:
-    """Execute one scraper and return a result dict."""
+    """
+    Execute one scraper and return a result dict.
+    Scrapers print() their hash rather than returning it, so we
+    capture stdout and extract the last 64-char hex string as the hash.
+    """
+    import io, contextlib, re as _re
     start = time.time()
     try:
-        result  = fn()
+        buf = io.StringIO()
+        with contextlib.redirect_stdout(buf):
+            result = fn()
         elapsed = time.time() - start
-        # Extract hash from various return shapes
+        output  = buf.getvalue()
+
+        # ── 1. Try return value first ─────────────────────────────────────
         h = None
         if isinstance(result, dict):
-            h = (result.get("hash") or result.get("output_hash") or
-                 result.get("result", {}) and
-                 (result["result"] or {}).get("hash") if isinstance(result.get("result"), dict) else None)
-        if not h and isinstance(result, (list, tuple)) and len(result) >= 2:
-            h = result[-1] if isinstance(result[-1], str) and len(result[-1]) == 64 else None
-        return {"task": fn_name, "status": "success", "hash": h, "elapsed": elapsed}
+            h = (result.get("hash") or result.get("output_hash") or "").strip() or None
+            if not h and isinstance(result.get("result"), dict):
+                h = (result["result"].get("hash") or result["result"].get("output_hash") or "").strip() or None
+        if not h and isinstance(result, str) and len(result) == 64 and _re.fullmatch(r"[0-9a-f]{64}", result):
+            h = result
+
+        # ── 2. Fall back to stdout — find last SHA-256 hex string ─────────
+        if not h:
+            matches = _re.findall(r"\b[0-9a-f]{64}\b", output)
+            if matches:
+                h = matches[-1]   # last printed hash wins
+
+        return {"task": fn_name, "status": "success", "hash": h,
+                "elapsed": elapsed, "output": output}
     except Exception as exc:
         return {"task": fn_name, "status": "error",
                 "hash": None, "error": str(exc),
