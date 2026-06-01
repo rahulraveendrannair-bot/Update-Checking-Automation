@@ -26,7 +26,7 @@ jobs:
   scrape:
     name: Run scrapers + update Excel
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 120
 
     steps:
       # ── 1. Checkout ──────────────────────────────────────────────────────────
