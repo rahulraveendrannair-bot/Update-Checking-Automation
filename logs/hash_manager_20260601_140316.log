@@ -1,0 +1,208 @@
+2026-06-01 14:03:16,743  INFO      Log file: logs/hash_manager_20260601_140316.log
+2026-06-01 14:03:16,743  INFO      ======================================================================
+2026-06-01 14:03:16,743  INFO      RPS Hash Manager  —  run started at 2026-06-01 14:03:16
+2026-06-01 14:03:16,743  INFO      Target file : RPS_Updates.xlsx
+2026-06-01 14:03:16,743  INFO      Workers     : 20
+2026-06-01 14:03:16,743  INFO      Dry-run     : False
+2026-06-01 14:03:16,744  INFO      ======================================================================
+2026-06-01 14:03:16,744  DEBUG     File-lock check passed.
+2026-06-01 14:03:16,744  INFO      Backup created: backups/RPS_Updates_backup_20260601_140316.xlsx
+2026-06-01 14:03:16,756  INFO      Loaded workbook — sheet 'Sheet1', 175 data rows.
+2026-06-01 14:03:16,756  INFO      Schema OK — columns: {'RPS List': 1, 'Old Hash Value': 2, 'New hash Value': 3}
+2026-06-01 14:03:16,757  INFO      Found 175 RPS list entries.
+2026-06-01 14:03:16,757  INFO      STEP 1: Shifting New Hash Value → Old Hash Value …
+2026-06-01 14:03:16,757  INFO      Shifted 3 'New Hash Value' entries → 'Old Hash Value'.
+2026-06-01 14:03:16,757  INFO      STEP 2: Running scrapers in parallel …
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'INTERPOL_UN_Notices_Entities' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'INTERPOL_UN_Notices_Individuals' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'KG_FIU_SANCTIONS_ENTITIES' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'KG_FIU_SANCTIONS_INDIVIDUALS' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'PRM_AR_DHS_EP' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'PRM_FL_DMS_CVL' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'US_DDTC_POA' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'US_NCDST_IFD_LIST' — will record null hash.
+2026-06-01 14:03:18,189  WARNING   No scraper found for 'US_RFJ_WT' — will record null hash.
+2026-06-01 14:03:18,190  WARNING   No scraper found for 'ZA_FIC_TFS' — will record null hash.
+2026-06-01 14:03:18,190  INFO      Running 165 scrapers with 20 workers …
+2026-06-01 14:03:18,205  WARNING     ✘  CT_DSS_AAL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  EU_EC_EDES                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  DK_DIS_ENTRY_BAN                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  FBI_SI                                              signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  EU_ECB_SANCTIONS                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  EU_EIB_LOE                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  AR_MOJ_RePET_E                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  BN_BDCB_AL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  FBI_MWT                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  EE_MFA_RUSSIA                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  CA_SPEC_MEAS_MOLDOVA                                signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,206  WARNING     ✘  BD_POLICE_WANTED                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  EU_EBRD_INELIGIBLE_ENTITIES                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  ES_WA_CNMV                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  EE_FSA_IA                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  DOC_BIS_RL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  DOS_TEL                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  CI_ADB_DEBARRED_ENTITIES                            signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  CA_SPEC_MEAS_ESV                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,207  WARNING     ✘  FBI_TOP_10                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  CA_SPEC_MEAS_SRILANKA                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  ES_NPC_TERRORISTS                                   signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  EE_MFA_HR                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  GB_FCA_UCB                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  DOS_SDP                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  CA_SPEC_MEAS_SUDAN                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,208  WARNING     ✘  CA_SPEC_MEAS_HAMAS_TA                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,209  WARNING     ✘  EE_MFA_BELARUS                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  AR_MOJ_RePET_P                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  DK_IS_PROHIBITED_ENTITIES                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  DOS_CRL                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  CA_GC_NRO                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  FBI_LAW_ENFORCEMENT                                 signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  AR_NIS_CPL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,210  WARNING     ✘  CA_SPEC_MEAS_GUATEMALA                              signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,214  WARNING     ✘  DK_IS_PROHIBITED_PERSONS                            signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,215  WARNING     ✘  CT_DOL_DL                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,215  WARNING     ✘  DOS_ADP                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,215  WARNING     ✘  EU_EUROPOL_MWF                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,226  WARNING     ✘  ES_BOS_SANCTIONS                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,228  WARNING     ✘  CH_UN_COTE_DIVOIRE_1572                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  GB_OFSI_TR_MP                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST                 signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  HK_ICAC_WL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  GG_GFSC_DD                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  HU_MNB_MSW                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IL_IIPB_PIL                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IL_MOF_WMD                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IL_MOJ_TERR_ORG                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IM_FSA_DD                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IM_FSA_ENFORCEMENT                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,229  WARNING     ✘  IN_UNLAWFUL_ASSOCIATION                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,230  WARNING     ✘  JP_METI                                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,231  WARNING     ✘  JP_UN_CONGO                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,231  WARNING     ✘  JP_UN_SANCTIONS_IRAN                                signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,231  WARNING     ✘  IN_BANNED_ORG                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,231  WARNING     ✘  JP_UN_SANCTIONS                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,231  WARNING     ✘  JP_UN_SS_2206                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,232  WARNING     ✘  JP_UN_YE_2140                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,232  WARNING     ✘  KE_FRC_DTFS                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  KR_MFA_SAKP                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  LB_ISF_NTFL                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  LV_FIU_SANCTIONED_SUBJECTS                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  MC_BT_NAFL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  MN_OSP_SDVR                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  MY_BNM_WANTED                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  MY_BNM_WARNING_LETTERS                              signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  JP_UN_SANCTIONS_SYRIA                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  MY_SCM_IA                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  IE_CBI_PN                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  NG_EFCC_WANTED_PERSON                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  NG_NIGSAC_ENTITIES                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,233  WARNING     ✘  NG_NIGSAC_INDIVIDUALS                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  NO_BLACK_LIST                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  MY_MHA_MOHA_LIST                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  OIG_MOST_WANTED                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  OM_NCTC_LL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PA_TREAS_SCI                                        signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PE_MEF_DISQUALIFIED_SUPPLIERS                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PL_MOF_SRM                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_AK_DHSS_EPL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_AL_AMA_SP                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_CA_DHCS_SIPL                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_CA_DIR_DC                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_DC_DDS_PSL                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_GA_DCH_EIE                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_HI_DHS_PERL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,234  WARNING     ✘  PRM_IA_DHS_MPSL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_ID_DHW_MPEL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_IL_DHFS_PSL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_IN_FSSA_PT                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  JP_UN_SANCTIONS_SOMALIA                             signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_KY_CHFS_PT                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  JP_UN_CAR_2134                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  NY_OGS_IDA                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_KS_DHE_TPL                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_MD_BPW_CB                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_LA_DH_AAL                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_MI_DHHS_SPL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_MO_DSS_PS                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,235  WARNING     ✘  PRM_MS_DM_SPL                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_MT_DPHHS_TMP                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NC_DA_DV                                        signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NC_DHHS_EPL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_ND_DHS_MPEL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NH_DHHS_MPESL                                   signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NJ_MFD_PER                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NV_DHHS_MSL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NV_OLC_DC                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_NY_DOL_DL                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_OH_DM_MPESL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_OR_BOLI_IC                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_PA_DGS_DSL                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_SC_DHHS_EPL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_SC_SFAA_SD                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,236  WARNING     ✘  PRM_TN_OPI_TPL                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_TX_HHS_EP                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_TX_TC_DVL                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WA_DOLI_DC                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WA_HCA_PTEL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WI_DOT_DSIC                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WV_DHHR_PSE                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WV_WVPD_DV                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  PRM_WY_DH_PEL                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  QA_MOI_SANCTIONS_LIST                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SECO_SWISS_GUATEMALA                                signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SECO_SWISS_HAMAS                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SECO_SWISS_MOLDOVA                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SG_ACRA_SUSPENSION                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SG_MAS_RUSSIA                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,237  WARNING     ✘  SG_SGX_WATCH_LIST                                   signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TH_AMLO_SANCTIONS                                   signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TR_MTF_ARTICLE_3                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TR_MTF_ARTICLE_5                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TR_MTF_ARTICLE_6                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  PRM_MA_MH_SEMP                                      signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TREAS_FINCEN_ADVISORY                               signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TREAS_FINCEN_PMLC                                   signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TT_FIU_DPRK                                         signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TR_MTF_ARTICLE_7                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TW_FSC_EA                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  TT_FIU_HAITI                                        signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  US_AF_FUGITIVES                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  US_CBP_UEL                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  MT_MPF_WANTED                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,238  WARNING     ✘  US_DOT_MOST_WANTED                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_EPA_FUGITIVES                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_FD_OCI_MOST_WANTED_FUGITIVES                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_FDA_CI                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_FDA_WL                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  TW_CBI_MW                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  PRM_MD_MDH_MSPL                                     signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  PRM_LA_DOA_DV                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_PDGS_IFP_LIST                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_SS_MWF                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  ZA_FSCA_EA                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_OGT_SCI                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_NJL_IDA                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  MY_SCM_WANTED                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  UA_SSU_WANTED                                       signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_SEC_LR                                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  US_DEA_MOST_WANTED                                  signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,239  WARNING     ✘  ZA_FIC_SANCTIONS                                    signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,240  WARNING     ✘  US_DHS_BFV                                          signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,240  WARNING     ✘  IN_SEBI_DEBARRED_ENTITIES                           signal only works in main thread of the main interpreter
+2026-06-01 14:03:18,242  WARNING   175 tasks returned null/blank hashes: ['AR_MOJ_RePET_E', 'AR_MOJ_RePET_P', 'AR_NIS_CPL', 'BD_POLICE_WANTED', 'BN_BDCB_AL', 'CA_GC_NRO', 'CA_SPEC_MEAS_ESV', 'CA_SPEC_MEAS_GUATEMALA', 'CA_SPEC_MEAS_HAMAS_TA', 'CA_SPEC_MEAS_MOLDOVA']…
+2026-06-01 14:03:18,242  INFO      STEP 3: Writing new hashes to Excel …
+2026-06-01 14:03:18,250  INFO      Write plan: total=175  updated=0  unchanged=0  null=175  changed=0
+2026-06-01 14:03:18,301  INFO      Audit Log sheet updated (row 16).
+2026-06-01 14:03:18,301  INFO      STEP 4: Saving workbook …
+2026-06-01 14:03:18,316  INFO      Workbook saved: RPS_Updates.xlsx
+2026-06-01 14:03:18,316  INFO      Change report: no changed rows — report not generated.
+2026-06-01 14:03:18,316  INFO      Change report: no changes detected — no report generated.
+2026-06-01 14:03:18,316  INFO      STEP 6: Change comparison summary
+2026-06-01 14:03:18,316  INFO        Total RPS records  : 175
+2026-06-01 14:03:18,316  INFO        Hashes updated     : 0
+2026-06-01 14:03:18,316  INFO        Hashes unchanged   : 0
+2026-06-01 14:03:18,316  INFO        Null/failed hashes : 175
+2026-06-01 14:03:18,317  INFO        Changed RPS lists  : 0
+2026-06-01 14:03:18,317  INFO      ======================================================================
+2026-06-01 14:03:18,317  INFO      Run complete.  0 updates, 0 changes detected.
+2026-06-01 14:03:18,317  INFO      ======================================================================
