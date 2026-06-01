@@ -189,14 +189,35 @@ _SCRAPERS_DIR  = os.path.join(os.path.dirname(__file__), "scrapers")
 _HEADLESS_PATCH = """\
 try:
     from selenium.webdriver.chrome.options import Options as _ChrOpts
-    _orig_init = _ChrOpts.__init__
-    def _patched_init(self, *a, **kw):
-        _orig_init(self, *a, **kw)
+    from selenium.webdriver.chrome.service import Service as _ChrSvc
+    import subprocess as _sp, shutil as _sh
+
+    # Auto-locate chromedriver
+    _orig_svc_init = _ChrSvc.__init__
+    def _patched_svc_init(self, executable_path="chromedriver", *a, **kw):
+        # Use system chromedriver or webdriver-manager
+        if not _sh.which(executable_path):
+            try:
+                from webdriver_manager.chrome import ChromeDriverManager
+                executable_path = ChromeDriverManager().install()
+            except Exception:
+                pass
+        _orig_svc_init(self, executable_path, *a, **kw)
+    _ChrSvc.__init__ = _patched_svc_init
+
+    _orig_opts_init = _ChrOpts.__init__
+    def _patched_opts_init(self, *a, **kw):
+        _orig_opts_init(self, *a, **kw)
         self.add_argument("--headless=new")
         self.add_argument("--no-sandbox")
         self.add_argument("--disable-dev-shm-usage")
         self.add_argument("--disable-gpu")
-    _ChrOpts.__init__ = _patched_init
+        self.add_argument("--disable-blink-features=AutomationControlled")
+        self.add_argument("--window-size=1920,1080")
+        self.add_argument("--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36")
+        self.add_experimental_option("excludeSwitches", ["enable-automation"])
+        self.add_experimental_option("useAutomationExtension", False)
+    _ChrOpts.__init__ = _patched_opts_init
 except Exception:
     pass
 """
@@ -237,38 +258,54 @@ def _run_one(fn_name: str, fn) -> dict:
     Execute one scraper and return a result dict.
     Scrapers print() their hash rather than returning it, so we
     capture stdout and extract the last 64-char hex string as the hash.
+    Retries once on failure with a 10s delay.
     """
     import io, contextlib, re as _re
-    start = time.time()
-    try:
+
+    def _attempt():
         buf = io.StringIO()
         with contextlib.redirect_stdout(buf):
             result = fn()
-        elapsed = time.time() - start
-        output  = buf.getvalue()
+        output = buf.getvalue()
 
-        # ── 1. Try return value first ─────────────────────────────────────
+        # ── 1. Try return value first ──────────────────────────────────
         h = None
         if isinstance(result, dict):
             h = (result.get("hash") or result.get("output_hash") or "").strip() or None
             if not h and isinstance(result.get("result"), dict):
-                h = (result["result"].get("hash") or result["result"].get("output_hash") or "").strip() or None
-        if not h and isinstance(result, str) and len(result) == 64 and _re.fullmatch(r"[0-9a-f]{64}", result):
+                h = (result["result"].get("hash") or
+                     result["result"].get("output_hash") or "").strip() or None
+        if not h and isinstance(result, str) and len(result) == 64                 and _re.fullmatch(r"[0-9a-f]{64}", result):
             h = result
 
-        # ── 2. Fall back to stdout — find last SHA-256 hex string ─────────
+        # ── 2. Fall back to stdout — last SHA-256 hex string ───────────
         if not h:
-            matches = _re.findall(r"\b[0-9a-f]{64}\b", output)
+            matches = _re.findall(r"[0-9a-f]{64}", output)
             if matches:
-                h = matches[-1]   # last printed hash wins
+                h = matches[-1]
 
-        return {"task": fn_name, "status": "success", "hash": h,
-                "elapsed": elapsed, "output": output}
-    except Exception as exc:
-        return {"task": fn_name, "status": "error",
-                "hash": None, "error": str(exc),
-                "traceback": traceback.format_exc(),
-                "elapsed": time.time() - start}
+        return h, output
+
+    start = time.time()
+    MAX_RETRIES = 2
+    last_exc = None
+
+    for attempt in range(1, MAX_RETRIES + 1):
+        try:
+            h, output = _attempt()
+            elapsed = time.time() - start
+            return {"task": fn_name, "status": "success", "hash": h,
+                    "elapsed": elapsed, "output": output}
+        except Exception as exc:
+            last_exc = exc
+            if attempt < MAX_RETRIES:
+                time.sleep(10)   # wait before retry
+
+    elapsed = time.time() - start
+    return {"task": fn_name, "status": "error",
+            "hash": None, "error": str(last_exc),
+            "traceback": traceback.format_exc(),
+            "elapsed": elapsed}
 
 
 def run_all_scrapers(rps_names: list[str], max_workers: int,
