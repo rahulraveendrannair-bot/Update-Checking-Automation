@@ -1,0 +1,208 @@
+2026-07-03 05:50:25,199  INFO      Log file: logs/hash_manager_20260703_055025.log
+2026-07-03 05:50:25,199  INFO      ======================================================================
+2026-07-03 05:50:25,199  INFO      RPS Hash Manager  —  run started at 2026-07-03 05:50:25
+2026-07-03 05:50:25,199  INFO      Target file : RPS_Updates.xlsx
+2026-07-03 05:50:25,199  INFO      Workers     : 20
+2026-07-03 05:50:25,199  INFO      Dry-run     : False
+2026-07-03 05:50:25,200  INFO      ======================================================================
+2026-07-03 05:50:25,200  DEBUG     File-lock check passed.
+2026-07-03 05:50:25,200  INFO      Backup created: backups/RPS_Updates_backup_20260703_055025.xlsx
+2026-07-03 05:50:25,214  INFO      Loaded workbook — sheet 'Sheet1', 175 data rows.
+2026-07-03 05:50:25,214  INFO      Schema OK — columns: {'RPS List': 1, 'Old Hash Value': 2, 'New hash Value': 3}
+2026-07-03 05:50:25,214  INFO      Found 175 RPS list entries.
+2026-07-03 05:50:25,214  INFO      STEP 1: Shifting New Hash Value → Old Hash Value …
+2026-07-03 05:50:25,214  INFO      Shifted 3 'New Hash Value' entries → 'Old Hash Value'.
+2026-07-03 05:50:25,214  INFO      STEP 2: Running scrapers in parallel …
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'INTERPOL_UN_Notices_Entities' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'INTERPOL_UN_Notices_Individuals' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'KG_FIU_SANCTIONS_ENTITIES' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'KG_FIU_SANCTIONS_INDIVIDUALS' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'PRM_AR_DHS_EP' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'PRM_FL_DMS_CVL' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'US_DDTC_POA' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'US_NCDST_IFD_LIST' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'US_RFJ_WT' — will record null hash.
+2026-07-03 05:50:27,579  WARNING   No scraper found for 'ZA_FIC_TFS' — will record null hash.
+2026-07-03 05:50:27,579  INFO      Running 165 scrapers with 20 workers …
+2026-07-03 05:50:38,445  WARNING     ✘  CA_SPEC_MEAS_GUATEMALA                              Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,033  WARNING     ✘  CI_ADB_DEBARRED_ENTITIES                            Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,071  WARNING     ✘  CA_SPEC_MEAS_SRILANKA                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,074  WARNING     ✘  CA_SPEC_MEAS_SUDAN                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,088  WARNING     ✘  CT_DOL_DL                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,092  WARNING     ✘  AR_MOJ_RePET_P                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,114  WARNING     ✘  CA_SPEC_MEAS_HAMAS_TA                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,114  WARNING     ✘  DK_IS_PROHIBITED_PERSONS                            Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,116  WARNING     ✘  DK_DIS_ENTRY_BAN                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,133  WARNING     ✘  CA_SPEC_MEAS_ESV                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,136  WARNING     ✘  BD_POLICE_WANTED                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,145  WARNING     ✘  DOC_BIS_RL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,155  WARNING     ✘  AR_MOJ_RePET_E                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,158  WARNING     ✘  BN_BDCB_AL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,163  WARNING     ✘  AR_NIS_CPL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,166  WARNING     ✘  CT_DSS_AAL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,172  WARNING     ✘  CH_UN_COTE_DIVOIRE_1572                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,173  WARNING     ✘  CA_GC_NRO                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,197  WARNING     ✘  DK_IS_PROHIBITED_ENTITIES                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:39,215  WARNING     ✘  CA_SPEC_MEAS_MOLDOVA                                Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:49,186  WARNING     ✘  DOS_ADP                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:49,800  WARNING     ✘  DOS_CRL                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,051  WARNING     ✘  DOS_TEL                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,444  WARNING     ✘  DOS_SDP                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,490  WARNING     ✘  ES_NPC_TERRORISTS                                   Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,494  WARNING     ✘  EU_EC_EDES                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,503  WARNING     ✘  ES_BOS_SANCTIONS                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,506  WARNING     ✘  EE_FSA_IA                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,520  WARNING     ✘  EE_MFA_RUSSIA                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,544  WARNING     ✘  EE_MFA_BELARUS                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,553  WARNING     ✘  EE_MFA_HR                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,557  WARNING     ✘  EU_EBRD_INELIGIBLE_ENTITIES                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,559  WARNING     ✘  EU_EUROPOL_MWF                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,561  WARNING     ✘  FBI_SI                                              Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,576  WARNING     ✘  EU_ECB_SANCTIONS                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,584  WARNING     ✘  FBI_TOP_10                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,585  WARNING     ✘  ES_WA_CNMV                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,603  WARNING     ✘  FBI_MWT                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,618  WARNING     ✘  FBI_LAW_ENFORCEMENT                                 Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:50,624  WARNING     ✘  EU_EIB_LOE                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:50:59,209  WARNING     ✘  GB_FCA_UCB                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:00,188  WARNING     ✘  GB_OFSI_TR_MP                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:00,769  WARNING     ✘  GE_MOJ_OTKHOZORIA_TATUNASHVILI_LIST                 Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,116  WARNING     ✘  GG_GFSC_DD                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,153  WARNING     ✘  IE_CBI_PN                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,191  WARNING     ✘  IL_MOF_WMD                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,700  WARNING     ✘  HU_MNB_MSW                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,709  WARNING     ✘  JP_UN_CAR_2134                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,761  WARNING     ✘  IL_IIPB_PIL                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,764  WARNING     ✘  JP_UN_CONGO                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,772  WARNING     ✘  IN_BANNED_ORG                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,772  WARNING     ✘  HK_ICAC_WL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,777  WARNING     ✘  IM_FSA_ENFORCEMENT                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,795  WARNING     ✘  IN_SEBI_DEBARRED_ENTITIES                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,813  WARNING     ✘  IM_FSA_DD                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,821  WARNING     ✘  IL_MOJ_TERR_ORG                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,823  WARNING     ✘  IN_UNLAWFUL_ASSOCIATION                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,823  WARNING     ✘  JP_UN_SANCTIONS_IRAN                                Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,827  WARNING     ✘  JP_UN_SANCTIONS_SOMALIA                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:01,841  WARNING     ✘  JP_METI                                             Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:09,232  WARNING     ✘  JP_UN_SANCTIONS_SYRIA                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:10,211  WARNING     ✘  JP_UN_SANCTIONS                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:10,793  WARNING     ✘  JP_UN_SS_2206                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:11,158  WARNING     ✘  JP_UN_YE_2140                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:11,194  WARNING     ✘  KE_FRC_DTFS                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:11,780  WARNING     ✘  KR_MFA_SAKP                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,115  INFO        ✔  OIG_MOST_WANTED                                     hash=None
+2026-07-03 05:51:12,255  WARNING     ✘  LV_FIU_SANCTIONED_SUBJECTS                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,515  WARNING     ✘  MN_OSP_SDVR                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,677  WARNING     ✘  MY_BNM_WANTED                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,679  WARNING     ✘  LB_ISF_NTFL                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,798  WARNING     ✘  MY_SCM_IA                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,810  WARNING     ✘  NG_NIGSAC_INDIVIDUALS                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,813  WARNING     ✘  MY_MHA_MOHA_LIST                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,823  WARNING     ✘  NG_NIGSAC_ENTITIES                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,838  WARNING     ✘  MC_BT_NAFL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,840  WARNING     ✘  MY_SCM_WANTED                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,842  WARNING     ✘  MY_BNM_WARNING_LETTERS                              Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,852  WARNING     ✘  MT_MPF_WANTED                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,865  WARNING     ✘  NO_BLACK_LIST                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:12,865  WARNING     ✘  NG_EFCC_WANTED_PERSON                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:13,051  INFO        ✔  PRM_CA_DIR_DC                                       hash=None
+2026-07-03 05:51:14,903  INFO        ✔  PRM_CA_DHCS_SIPL                                    hash=None
+2026-07-03 05:51:16,534  INFO        ✔  PRM_DC_DDS_PSL                                      hash=None
+2026-07-03 05:51:19,255  WARNING     ✘  NY_OGS_IDA                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:20,816  WARNING     ✘  OM_NCTC_LL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:21,198  WARNING     ✘  PA_TREAS_SCI                                        Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:21,234  WARNING     ✘  PE_MEF_DISQUALIFIED_SUPPLIERS                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:21,803  WARNING     ✘  PL_MOF_SRM                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:22,460  WARNING     ✘  PRM_AK_DHSS_EPL                                     403 Client Error: Forbidden for url: https://health.alaska.gov/media/h3ueo2kf/al
+2026-07-03 05:51:22,536  WARNING     ✘  PRM_AL_AMA_SP                                       HTTPSConnectionPool(host='medicaid.alabama.gov', port=443): Max retries exceeded
+2026-07-03 05:51:23,468  WARNING     ✘  PRM_ID_DHW_MPEL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,753  WARNING     ✘  PRM_HI_DHS_PERL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,755  WARNING     ✘  PRM_IL_DHFS_PSL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,769  WARNING     ✘  PRM_IA_DHS_MPSL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,851  WARNING     ✘  PRM_KS_DHE_TPL                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,862  WARNING     ✘  PRM_LA_DOA_DV                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,865  WARNING     ✘  PRM_MA_MH_SEMP                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,873  WARNING     ✘  PRM_LA_DH_AAL                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,881  WARNING     ✘  PRM_IN_FSSA_PT                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,892  WARNING     ✘  PRM_KY_CHFS_PT                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:23,918  WARNING     ✘  PRM_GA_DCH_EIE                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:24,937  WARNING     ✘  PRM_MD_BPW_CB                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:29,026  WARNING     ✘  PRM_MD_MDH_MSPL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:31,904  INFO        ✔  PRM_NJ_MFD_PER                                      hash=None
+2026-07-03 05:51:31,986  WARNING     ✘  PRM_MI_DHHS_SPL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,076  WARNING     ✘  PRM_MO_DSS_PS                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,108  WARNING     ✘  PRM_MS_DM_SPL                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,113  WARNING     ✘  PRM_MT_DPHHS_TMP                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,169  WARNING     ✘  PRM_NC_DA_DV                                        Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,489  WARNING     ✘  PRM_NC_DHHS_EPL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:32,559  WARNING     ✘  PRM_ND_DHS_MPEL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:33,960  WARNING     ✘  PRM_NH_DHHS_MPESL                                   Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,141  WARNING     ✘  PRM_NV_DHHS_MSL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,167  WARNING     ✘  PRM_NV_OLC_DC                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,390  WARNING     ✘  PRM_NY_DOL_DL                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,530  WARNING     ✘  PRM_PA_DGS_DSL                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,532  WARNING     ✘  PRM_TN_OPI_TPL                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,540  WARNING     ✘  PRM_SC_DHHS_EPL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,546  WARNING     ✘  PRM_OR_BOLI_IC                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,547  WARNING     ✘  PRM_OH_DM_MPESL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:34,551  WARNING     ✘  PRM_SC_SFAA_SD                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:37,234  WARNING     ✘  PRM_TX_HHS_EP                                       `Import xlrd` failed. Install xlrd >= 2.0.1 for xls Excel support Use pip or con
+2026-07-03 05:51:41,921  WARNING     ✘  PRM_TX_TC_DVL                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,167  WARNING     ✘  PRM_WA_DOLI_DC                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,218  WARNING     ✘  PRM_WA_HCA_PTEL                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,353  WARNING     ✘  PRM_WV_DHHR_PSE                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,374  WARNING     ✘  PRM_WY_DH_PEL                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,394  WARNING     ✘  PRM_WV_WVPD_DV                                      Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,513  WARNING     ✘  QA_MOI_SANCTIONS_LIST                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:42,582  WARNING     ✘  SECO_SWISS_GUATEMALA                                Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:43,984  WARNING     ✘  SECO_SWISS_HAMAS                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:44,165  WARNING     ✘  SECO_SWISS_MOLDOVA                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:44,189  WARNING     ✘  SG_ACRA_SUSPENSION                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:44,727  WARNING     ✘  SG_MAS_RUSSIA                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,063  WARNING     ✘  SG_SGX_WATCH_LIST                                   Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,073  WARNING     ✘  TR_MTF_ARTICLE_3                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,080  WARNING     ✘  TH_AMLO_SANCTIONS                                   Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,081  WARNING     ✘  TR_MTF_ARTICLE_5                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,089  WARNING     ✘  TR_MTF_ARTICLE_6                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,097  WARNING     ✘  TR_MTF_ARTICLE_7                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:45,438  INFO        ✔  US_PDGS_IFP_LIST                                    hash=None
+2026-07-03 05:51:45,560  INFO        ✔  US_NJL_IDA                                          hash=None
+2026-07-03 05:51:47,257  WARNING     ✘  TREAS_FINCEN_ADVISORY                               Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:48,444  INFO        ✔  US_DOT_MOST_WANTED                                  hash=None
+2026-07-03 05:51:51,944  WARNING     ✘  TREAS_FINCEN_PMLC                                   Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,190  WARNING     ✘  TT_FIU_DPRK                                         Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,241  WARNING     ✘  TT_FIU_HAITI                                        Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,472  WARNING     ✘  TW_CBI_MW                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,506  WARNING     ✘  UA_SSU_WANTED                                       Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,507  WARNING     ✘  TW_FSC_EA                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,535  WARNING     ✘  US_AF_FUGITIVES                                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:52,605  WARNING     ✘  US_CBP_UEL                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:54,010  WARNING     ✘  US_DEA_MOST_WANTED                                  Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:54,188  WARNING     ✘  US_DHS_BFV                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:54,751  WARNING     ✘  US_EPA_FUGITIVES                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,319  WARNING     ✘  US_FD_OCI_MOST_WANTED_FUGITIVES                     Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,392  WARNING     ✘  US_FDA_CI                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,395  WARNING     ✘  US_FDA_WL                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,396  WARNING     ✘  US_OGT_SCI                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,462  WARNING     ✘  US_SEC_LR                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:55,583  WARNING     ✘  US_SS_MWF                                           Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:57,280  WARNING     ✘  ZA_FIC_SANCTIONS                                    Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 05:51:58,467  WARNING     ✘  ZA_FSCA_EA                                          Message: Unable to obtain driver for chrome; For documentation on this error, pl
+2026-07-03 06:00:38,575  WARNING     ✘  PRM_WI_DOT_DSIC                                     HTTPSConnectionPool(host='wisconsindot.gov', port=443): Max retries exceeded wit
+2026-07-03 06:00:38,578  WARNING   175 tasks returned null/blank hashes: ['AR_MOJ_RePET_E', 'AR_MOJ_RePET_P', 'AR_NIS_CPL', 'BD_POLICE_WANTED', 'BN_BDCB_AL', 'CA_GC_NRO', 'CA_SPEC_MEAS_ESV', 'CA_SPEC_MEAS_GUATEMALA', 'CA_SPEC_MEAS_HAMAS_TA', 'CA_SPEC_MEAS_MOLDOVA']…
+2026-07-03 06:00:38,578  INFO      STEP 3: Writing new hashes to Excel …
+2026-07-03 06:00:38,585  INFO      Write plan: total=175  updated=0  unchanged=0  null=175  changed=0
+2026-07-03 06:00:38,637  INFO      Audit Log sheet updated (row 52).
+2026-07-03 06:00:38,637  INFO      STEP 4: Saving workbook …
+2026-07-03 06:00:38,655  INFO      Workbook saved: RPS_Updates.xlsx
+2026-07-03 06:00:38,655  INFO      Change report: no changed rows — report not generated.
+2026-07-03 06:00:38,655  INFO      Change report: no changes detected — no report generated.
+2026-07-03 06:00:38,655  INFO      STEP 6: Change comparison summary
+2026-07-03 06:00:38,655  INFO        Total RPS records  : 175
+2026-07-03 06:00:38,655  INFO        Hashes updated     : 0
+2026-07-03 06:00:38,655  INFO        Hashes unchanged   : 0
+2026-07-03 06:00:38,655  INFO        Null/failed hashes : 175
+2026-07-03 06:00:38,656  INFO        Changed RPS lists  : 0
+2026-07-03 06:00:38,656  INFO      ======================================================================
+2026-07-03 06:00:38,656  INFO      Run complete.  0 updates, 0 changes detected.
+2026-07-03 06:00:38,656  INFO      ======================================================================
